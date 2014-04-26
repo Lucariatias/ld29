@@ -26,4 +26,13 @@ public class Player extends LevelObject {
     public Rectangle getBounds() {
         return new Rectangle(getLocation().getX(), getLocation().getY(), image.getWidth(), image.getHeight());
     }
+
+    public int getAngle() {
+        return angle;
+    }
+
+    public void setAngle(int angle) {
+        this.angle = angle;
+    }
+
 }
