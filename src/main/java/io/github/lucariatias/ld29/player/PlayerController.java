@@ -2,7 +2,7 @@ package io.github.lucariatias.ld29.player;
 
 public abstract class PlayerController {
 
-    private static final int TURNING_SPEED = 1;
+    private static final int TURNING_SPEED = 10;
 
     private Player player;
 
