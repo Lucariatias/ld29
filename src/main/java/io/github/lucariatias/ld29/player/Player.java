@@ -20,6 +20,7 @@ public class Player extends LevelObject {
         Graphics2D graphics2D = (Graphics2D) graphics;
         graphics2D.rotate(angle);
         graphics2D.drawImage(image, getLocation().getX(), getLocation().getY(), null);
+        graphics2D.rotate(-angle);
     }
 
     @Override
