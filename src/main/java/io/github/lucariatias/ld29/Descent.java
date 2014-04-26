@@ -47,7 +47,7 @@ public class Descent extends JPanel implements Runnable {
             playerController = new KeyboardPlayerController(player);
             frame.addKeyListener(playerController);
             level.populate(map);
-            this.levelPanel = new LevelPanel(level);
+            this.levelPanel = new LevelPanel(level, player);
             add(levelPanel);
         }
     }
