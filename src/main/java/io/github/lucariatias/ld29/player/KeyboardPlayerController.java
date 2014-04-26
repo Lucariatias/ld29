@@ -18,9 +18,9 @@ public class KeyboardPlayerController extends PlayerController implements KeyLis
     public void keyPressed(KeyEvent event) {
         switch (event.getKeyCode()) {
             case VK_RIGHT:case VK_D: setApproachingAngle(0); break;
-            case VK_UP:case VK_W: setApproachingAngle(90); break;
+            case VK_DOWN:case VK_S: setApproachingAngle(90); break;
             case VK_LEFT:case VK_A: setApproachingAngle(180); break;
-            case VK_DOWN:case VK_S: setApproachingAngle(270); break;
+            case VK_UP:case VK_W: setApproachingAngle(270); break;
         }
     }
 
