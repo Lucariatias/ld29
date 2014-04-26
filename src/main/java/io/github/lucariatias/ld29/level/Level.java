@@ -47,8 +47,10 @@ public class Level {
     }
 
     public void render(Graphics graphics) {
+        Location cameraLocation = descent.getLevelPanel().getCamera().getLocation();
         for (LevelObject object : objects) {
-            if (object.getLocation().distanceSquared(descent.getLevelPanel().getCamera().getLocation()) <= 640000) object.render(graphics);
+            Location objectLocation = object.getLocation();
+            if (objectLocation.getX() >= cameraLocation.getX() - 32 && objectLocation.getY() >= cameraLocation.getY() - 32 && objectLocation.distanceSquared(cameraLocation) <= 640000) object.render(graphics);
         }
     }
 
@@ -72,7 +74,124 @@ public class Level {
     private LevelObject getObject(Color colour) {
         switch (colour.getBlue()) {
             case 0: return null;
-            case 1: return new Block(this, tileSheet.getImage(colour.getRed(), colour.getGreen()));
+            case 1:
+                Rectangle bounds;
+                if (colour.getRed() == 0) {
+                    switch (colour.getGreen()) {
+                        case 0:
+                            bounds = new Rectangle(0, 0, 0, 0);
+                            break;
+                        case 1:case 2:
+                            bounds = new Rectangle(0, 0, 32, 32);
+                            break;
+                        default:
+                            bounds = new Rectangle(0, 0, 32, 32);
+                            break;
+                    }
+                } else if (colour.getRed() == 1) {
+                    switch (colour.getGreen()) {
+                        case 0:
+                            bounds = new Rectangle(16, 16, 16, 16);
+                            break;
+                        case 1:
+                            bounds = new Rectangle(16, 0, 16, 16);
+                            break;
+                        case 2:
+                            bounds = new Rectangle(0, 16, 32, 16);
+                            break;
+                        default:
+                            bounds = new Rectangle(0, 0, 32, 32);
+                            break;
+                    }
+                } else if (colour.getRed() == 2) {
+                    switch (colour.getGreen()) {
+                        case 0:
+                            bounds = new Rectangle(0, 16, 16, 16);
+                            break;
+                        case 1:
+                            bounds = new Rectangle(0, 0, 16, 16);
+                            break;
+                        case 2:
+                            bounds = new Rectangle(0, 0, 16, 32);
+                            break;
+                        default:
+                            bounds = new Rectangle(0, 0, 32, 32);
+                            break;
+                    }
+                } else if (colour.getRed() == 3) {
+                    switch (colour.getGreen()) {
+                        case 0:
+                        case 1:
+                            bounds = new Rectangle(0, 0, 32, 32);
+                            break;
+                        case 2:
+                            bounds = new Rectangle(16, 0, 16, 32);
+                            break;
+                        default:
+                            bounds = new Rectangle(0, 0, 32, 32);
+                            break;
+                    }
+                } else if (colour.getRed() == 4) {
+                    switch (colour.getGreen()) {
+                        case 0:
+                        case 1:
+                            bounds = new Rectangle(0, 0, 32, 32);
+                            break;
+                        case 2:
+                            bounds = new Rectangle(0, 0, 32, 16);
+                            break;
+                        default:
+                            bounds = new Rectangle(0, 0, 32, 32);
+                            break;
+                    }
+                } else if (colour.getRed() == 5) {
+                    switch (colour.getGreen()) {
+                        case 0:
+                            bounds = new Rectangle(0, 0, 16, 16);
+                            break;
+                        case 1:
+                            bounds = new Rectangle(0, 16, 16, 16);
+                            break;
+                        case 2:
+                        default:
+                            bounds = new Rectangle(0, 0, 32, 32);
+                            break;
+                    }
+                } else if (colour.getRed() == 6) {
+                    switch (colour.getGreen()) {
+                        case 0:
+                            bounds = new Rectangle(16, 0, 16, 16);
+                            break;
+                        case 1:
+                        case 2:
+                            bounds = new Rectangle(16, 16, 16, 16);
+                            break;
+                        case 3:
+                            bounds = new Rectangle(16, 0, 16, 16);
+                            break;
+                        default:
+                            bounds = new Rectangle(0, 0, 32, 32);
+                            break;
+                    }
+                } else if (colour.getRed() == 7) {
+                    switch (colour.getGreen()) {
+                        case 0:case 1:
+                            bounds = new Rectangle(0, 0, 32, 32);
+                            break;
+                        case 2:
+                            bounds = new Rectangle(0, 16, 16, 16);
+                            break;
+                        case 3:
+                            bounds = new Rectangle(0, 0, 16, 16);
+                            break;
+                        default:
+                            bounds = new Rectangle(0, 0, 32, 32);
+                            break;
+                    }
+                } else {
+                    bounds = new Rectangle(0, 0, 32, 32);
+                }
+                return new Block(this, tileSheet.getImage(colour.getRed(), colour.getGreen()), bounds);
             case 2: return descent.getPlayer();
             default: return null;
         }

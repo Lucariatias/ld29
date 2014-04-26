@@ -12,9 +12,10 @@ public class Block extends LevelObject {
     private BufferedImage image;
     private Rectangle bounds;
 
-    public Block(Level level, BufferedImage image) {
+    public Block(Level level, BufferedImage image, Rectangle bounds) {
         super(level);
         this.image = image;
+        this.bounds = bounds;
         setSolid(true);
     }
 
