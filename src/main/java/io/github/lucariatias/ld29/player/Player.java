@@ -10,10 +10,9 @@ import java.awt.image.BufferedImage;
 
 public class Player extends LevelObject {
 
-    private static final int SPEED = 4;
-
     private BufferedImage image;
 
+    private int speed = 4;
     private int angle;
 
     public Player(Level level, BufferedImage image) {
@@ -44,6 +43,14 @@ public class Player extends LevelObject {
         return new Rectangle(location.getX() - (image.getWidth() / 2), location.getY() - (image.getHeight() / 2), image.getWidth(), image.getHeight());
     }
 
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
     public int getAngle() {
         return angle;
     }
@@ -54,8 +61,16 @@ public class Player extends LevelObject {
 
     @Override
     public void onTick() {
-        setDirection(new Vector((int) Math.round(SPEED * Math.sin(Math.toRadians(90 - angle))), (int) Math.round(SPEED * Math.cos(Math.toRadians(90 - angle)))));
-        super.onTick();
+        setDirection(new Vector((int) Math.round(speed * Math.sin(Math.toRadians(90 - angle))), (int) Math.round(speed * Math.cos(Math.toRadians(90 - angle)))));
+        if (!isCollision(getLocation().getRelative(getDirection()))) {
+            setLocation(getLocation().getRelative(getDirection()));
+        } else {
+            die();
+        }
+    }
+
+    public void die() {
+
     }
 
 }

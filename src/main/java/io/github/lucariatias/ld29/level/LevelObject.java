@@ -46,13 +46,7 @@ public abstract class LevelObject {
         this.solid = solid;
     }
 
-    public void onTick() {
-        if (direction != null) {
-            if (!isCollision(location)) {
-                location = location.getRelative(direction);
-            }
-        }
-    }
+    public void onTick() {}
 
     public boolean isCollision(Location location) {
         for (LevelObject object : level.getObjects()) {
