@@ -16,6 +16,10 @@ public class LevelPanel extends JPanel {
         this.camera = new Camera(player);
     }
 
+    public Camera getCamera() {
+        return camera;
+    }
+
     public void onTick() {
         level.onTick();
         camera.onTick();

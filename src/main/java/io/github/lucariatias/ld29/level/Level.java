@@ -34,7 +34,7 @@ public class Level {
 
     public void render(Graphics graphics) {
         for (LevelObject object : objects) {
-            object.render(graphics);
+            if (object.getLocation().distanceSquared(descent.getLevelPanel().getCamera().getLocation()) <= 640000) object.render(graphics);
         }
     }
 

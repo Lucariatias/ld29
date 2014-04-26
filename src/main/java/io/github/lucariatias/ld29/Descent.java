@@ -52,6 +52,10 @@ public class Descent extends JPanel implements Runnable {
         }
     }
 
+    public LevelPanel getLevelPanel() {
+        return levelPanel;
+    }
+
     public Player getPlayer() {
         return player;
     }
