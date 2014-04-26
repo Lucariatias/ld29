@@ -31,13 +31,6 @@ public class Descent extends JPanel implements Runnable {
         setBackground(new Color(48, 0, 48));
         setPreferredSize(new Dimension(640, 480));
         setDoubleBuffered(true);
-        try {
-            player = new Player(ImageIO.read(getClass().getResourceAsStream("/player.png")));
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
-        playerController = new KeyboardPlayerController(player);
-        frame.addKeyListener(playerController);
         BufferedImage map = null;
         try {
             map = ImageIO.read(getClass().getResourceAsStream("/map.png"));
@@ -45,7 +38,15 @@ public class Descent extends JPanel implements Runnable {
             exception.printStackTrace();
         }
         if (map != null) {
-            Level level = new Level(this, map);
+            Level level = new Level(this);
+            try {
+                player = new Player(level, ImageIO.read(getClass().getResourceAsStream("/player.png")));
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
+            playerController = new KeyboardPlayerController(player);
+            frame.addKeyListener(playerController);
+            level.populate(map);
             this.levelPanel = new LevelPanel(level);
             add(levelPanel);
         }

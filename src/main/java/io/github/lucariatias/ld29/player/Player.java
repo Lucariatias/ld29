@@ -1,18 +1,23 @@
 package io.github.lucariatias.ld29.player;
 
+import io.github.lucariatias.ld29.level.Level;
 import io.github.lucariatias.ld29.level.LevelObject;
 import io.github.lucariatias.ld29.level.Location;
+import io.github.lucariatias.ld29.level.Vector;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Player extends LevelObject {
 
+    private static final int SPEED = 4;
+
     private BufferedImage image;
 
     private int angle;
 
-    public Player(BufferedImage image) {
+    public Player(Level level, BufferedImage image) {
+        super(level);
         this.image = image;
     }
 
@@ -35,8 +40,8 @@ public class Player extends LevelObject {
     }
 
     @Override
-    public Rectangle getBounds() {
-        return new Rectangle(getLocation().getX(), getLocation().getY(), image.getWidth(), image.getHeight());
+    public Rectangle getBoundsAt(Location location) {
+        return new Rectangle(location.getX(), location.getY(), image.getWidth(), image.getHeight());
     }
 
     public int getAngle() {
@@ -45,6 +50,12 @@ public class Player extends LevelObject {
 
     public void setAngle(int angle) {
         this.angle = angle;
+    }
+
+    @Override
+    public void onTick() {
+        setDirection(new Vector((int) Math.round(SPEED * Math.sin(Math.toRadians(90 - angle))), (int) Math.round(SPEED * Math.cos(Math.toRadians(90 - angle)))));
+        super.onTick();
     }
 
 }

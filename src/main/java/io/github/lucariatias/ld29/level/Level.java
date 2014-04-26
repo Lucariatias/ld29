@@ -14,9 +14,8 @@ public class Level {
 
     private Set<LevelObject> objects = new HashSet<>();
 
-    public Level(Descent descent, BufferedImage map) {
+    public Level(Descent descent) {
         this.descent = descent;
-        populate(map);
     }
 
     public Set<LevelObject> getObjects() {
@@ -47,7 +46,7 @@ public class Level {
                 int g = (pixel >> 8) & 0xff;
                 int b = pixel & 0xff;
                 LevelObject object = null;
-                if (r == 255 && g == 255 && b == 255) object = new Block();
+                if (r == 255 && g == 255 && b == 255) object = new Block(this);
                 if (r == 0 && g == 255 && b == 0) object = descent.getPlayer();
                 if (object != null) {
                     object.setLocation(new Location(x * 32, y * 32));
@@ -55,6 +54,7 @@ public class Level {
                 }
             }
         }
+        map.flush();
     }
 
 }

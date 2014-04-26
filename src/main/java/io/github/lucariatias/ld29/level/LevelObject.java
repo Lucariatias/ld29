@@ -10,8 +10,17 @@ public abstract class LevelObject {
 
     private boolean solid;
 
+    public LevelObject(Level level) {
+        this.level = level;
+    }
+
     public abstract void render(Graphics graphics);
-    public abstract Rectangle getBounds();
+
+    public Rectangle getBounds() {
+        return getBoundsAt(location);
+    }
+
+    public abstract Rectangle getBoundsAt(Location location);
 
     public Location getLocation() {
         return location;
@@ -48,7 +57,7 @@ public abstract class LevelObject {
     public boolean isCollision(Location location) {
         for (LevelObject object : level.getObjects()) {
             if (!object.isSolid()) continue;
-            if (object.getBounds().intersects(getBounds())) return true;
+            if (object.getBounds().intersects(getBoundsAt(location))) return true;
         }
         return false;
     }
