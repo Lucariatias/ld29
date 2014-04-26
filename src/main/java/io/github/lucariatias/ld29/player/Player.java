@@ -85,4 +85,10 @@ public class Player extends LevelObject {
         dead = true;
     }
 
+    public void reset() {
+        dead = false;
+        explodeRadius = 1;
+        angle = 0;
+    }
+
 }

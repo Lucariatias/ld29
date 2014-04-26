@@ -45,6 +45,8 @@ public class Level {
     public void reset() {
         objects.clear();
         populate(map);
+        descent.getPlayer().reset();
+        descent.getPlayerController().reset();
     }
 
     public void onTick() {

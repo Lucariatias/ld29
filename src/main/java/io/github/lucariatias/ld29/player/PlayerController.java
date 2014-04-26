@@ -37,4 +37,9 @@ public abstract class PlayerController {
             player.setAngle(player.getAngle() + 360);
         }
     }
+
+    public void reset() {
+        approachingAngle = 0;
+    }
+
 }

@@ -93,4 +93,7 @@ public class Descent extends JPanel implements Runnable {
         thread.start();
     }
 
+    public KeyboardPlayerController getPlayerController() {
+        return playerController;
+    }
 }
