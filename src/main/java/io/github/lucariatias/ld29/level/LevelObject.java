@@ -22,6 +22,10 @@ public abstract class LevelObject {
 
     public abstract Rectangle getBoundsAt(Location location);
 
+    public Level getLevel() {
+        return level;
+    }
+
     public Location getLocation() {
         return location;
     }

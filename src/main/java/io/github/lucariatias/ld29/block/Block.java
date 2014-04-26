@@ -3,33 +3,37 @@ package io.github.lucariatias.ld29.block;
 import io.github.lucariatias.ld29.level.Level;
 import io.github.lucariatias.ld29.level.LevelObject;
 import io.github.lucariatias.ld29.level.Location;
-import io.github.lucariatias.ld29.level.Vector;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Block extends LevelObject {
 
-    public Block(Level level) {
+    private BufferedImage image;
+    private Rectangle bounds;
+
+    public Block(Level level, BufferedImage image) {
         super(level);
+        this.image = image;
         setSolid(true);
     }
 
     @Override
     public void render(Graphics graphics) {
-        graphics.setColor(new Color(32, 32, 32));
-        graphics.fillRect(getLocation().getX(), getLocation().getY(), 32, 32);
-        boolean tl = isCollision(getLocation().getRelative(new Vector(-1, -1))); // Top left
-        boolean tr = isCollision(getLocation().getRelative(new Vector(1, -1))); // Top right
-        boolean bl = isCollision(getLocation().getRelative(new Vector(-1, 1))); // Bottom left
-        boolean br = isCollision(getLocation().getRelative(new Vector(1, 1))); // Bottom right
-        boolean t = isCollision(getLocation().getRelative(new Vector(0, -1))); // Top
-        boolean l = isCollision(getLocation().getRelative(new Vector(-1, 0))); // Left
-        boolean r = isCollision(getLocation().getRelative(new Vector(1, 0))); // Right
-        boolean b = isCollision(getLocation().getRelative(new Vector(0, 1))); // Bottom
+        graphics.drawImage(image, getLocation().getX(), getLocation().getY(), null);
     }
 
     @Override
     public Rectangle getBoundsAt(Location location) {
-        return new Rectangle(location.getX(), location.getY(), 32, 32);
+        return new Rectangle(location.getX() + (int) bounds.getX(), location.getY() + (int) bounds.getY(), (int) bounds.getWidth(), (int) bounds.getHeight());
     }
+
+    public BufferedImage getImage() {
+        return image;
+    }
+
+    public void setImage(BufferedImage image) {
+        this.image = image;
+    }
+
 }
