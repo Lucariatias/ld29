@@ -9,6 +9,7 @@
     <version>0.0.1-SNAPSHOT</version>
 
     <build>
+        <defaultGoal>clean install</defaultGoal>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
