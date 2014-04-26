@@ -56,6 +56,7 @@ public class Descent extends JPanel implements Runnable {
     }
 
     private void doTick() {
+        playerController.onTick();
         levelPanel.onTick();
     }
 
