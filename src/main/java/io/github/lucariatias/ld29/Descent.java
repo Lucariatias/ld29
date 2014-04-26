@@ -4,6 +4,7 @@ import io.github.lucariatias.ld29.level.Level;
 import io.github.lucariatias.ld29.level.LevelPanel;
 import io.github.lucariatias.ld29.player.KeyboardPlayerController;
 import io.github.lucariatias.ld29.player.Player;
+import io.github.lucariatias.ld29.player.PlayerController;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -93,7 +94,7 @@ public class Descent extends JPanel implements Runnable {
         thread.start();
     }
 
-    public KeyboardPlayerController getPlayerController() {
+    public PlayerController getPlayerController() {
         return playerController;
     }
 }
