@@ -40,6 +40,7 @@ public class Descent extends JPanel implements Runnable {
         if (map != null) {
             Level level = new Level(this, map);
             this.levelPanel = new LevelPanel(level);
+            add(levelPanel);
         }
         try {
             player = new Player(ImageIO.read(getClass().getResourceAsStream("/player.png")));
