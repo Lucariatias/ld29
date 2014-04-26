@@ -2,6 +2,7 @@ package io.github.lucariatias.ld29.level;
 
 import io.github.lucariatias.ld29.Descent;
 import io.github.lucariatias.ld29.block.Block;
+import io.github.lucariatias.ld29.player.Player;
 import io.github.lucariatias.ld29.tile.TileSheet;
 
 import javax.imageio.ImageIO;
@@ -63,9 +64,13 @@ public class Level {
     public void render(Graphics graphics) {
         Location cameraLocation = descent.getLevelPanel().getCamera().getLocation();
         for (LevelObject object : objects) {
-            Location objectLocation = object.getLocation();
-            if (objectLocation.getX() >= cameraLocation.getX() - 32 && objectLocation.getY() >= cameraLocation.getY() - 32 && objectLocation.distanceSquared(cameraLocation) <= 640000) object.render(graphics);
+            if (!(object instanceof Player)) {
+                Location objectLocation = object.getLocation();
+                if (objectLocation.getX() >= cameraLocation.getX() - 32 && objectLocation.getY() >= cameraLocation.getY() - 32 && objectLocation.distanceSquared(cameraLocation) <= 640000)
+                    object.render(graphics);
+            }
         }
+        descent.getPlayer().render(graphics);
     }
 
     public void populate(BufferedImage map) {
