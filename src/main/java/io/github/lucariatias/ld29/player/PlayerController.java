@@ -25,7 +25,16 @@ public abstract class PlayerController {
     }
 
     public void onTick() {
-        if (approachingAngle > player.getAngle()) player.setAngle(player.getAngle() + TURNING_SPEED);
-        if (approachingAngle < player.getAngle()) player.setAngle(player.getAngle() - TURNING_SPEED);
+        if (approachingAngle > player.getAngle()) {
+            if (approachingAngle - player.getAngle() >= 180) player.setAngle(player.getAngle() - TURNING_SPEED); else player.setAngle(player.getAngle() + TURNING_SPEED);
+        } else if (approachingAngle < player.getAngle()) {
+            if (player.getAngle() - approachingAngle >= 180) player.setAngle(player.getAngle() + TURNING_SPEED); else player.setAngle(player.getAngle() - TURNING_SPEED);
+        }
+        while (player.getAngle() >= 360) {
+            player.setAngle(player.getAngle() - 360);
+        }
+        while (player.getAngle() < 0) {
+            player.setAngle(player.getAngle() + 360);
+        }
     }
 }

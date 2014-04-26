@@ -18,9 +18,15 @@ public class Player extends LevelObject {
     @Override
     public void render(Graphics graphics) {
         Graphics2D graphics2D = (Graphics2D) graphics;
-        graphics2D.rotate(Math.toRadians(angle), getLocation().getX() + (image.getWidth() / 2), getLocation().getY() + (image.getHeight() / 2));
-        graphics2D.drawImage(image, getLocation().getX(), getLocation().getY(), null);
-        graphics2D.rotate(-Math.toRadians(angle), getLocation().getX() + (image.getWidth() / 2), getLocation().getY() + (image.getHeight() / 2));
+        graphics2D.rotate(Math.toRadians(angle), getLocation().getX(), getLocation().getY());
+        graphics2D.drawImage(image, getLocation().getX() - (image.getWidth() / 2), getLocation().getY() - (image.getHeight() / 2), null);
+        graphics2D.rotate(-Math.toRadians(angle), getLocation().getX(), getLocation().getY());
+        graphics.setColor(Color.WHITE);
+        graphics.drawOval(getLocation().getX() - 64, getLocation().getY() - 64, 128, 128);
+        graphics.drawLine(getLocation().getX() + image.getWidth(), getLocation().getY(), getLocation().getX() + (image.getWidth() * 2), getLocation().getY());
+        graphics.drawLine(getLocation().getX() - image.getWidth(), getLocation().getY(), getLocation().getX() - (image.getWidth() * 2), getLocation().getY());
+        graphics.drawLine(getLocation().getX(), getLocation().getY() + image.getHeight(), getLocation().getX(), getLocation().getY() + (image.getHeight() * 2));
+        graphics.drawLine(getLocation().getX(), getLocation().getY() - image.getHeight(), getLocation().getX(), getLocation().getY() - (image.getHeight() * 2));
     }
 
     @Override
