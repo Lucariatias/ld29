@@ -50,7 +50,7 @@ public class Level {
                 if (r == 255 && g == 255 && b == 255) object = new Block();
                 if (r == 0 && g == 255 && b == 0) object = descent.getPlayer();
                 if (object != null) {
-                    object.setLocation(new Location(x * 16, y * 16));
+                    object.setLocation(new Location(x * 32, y * 32));
                     addObject(object);
                 }
             }
