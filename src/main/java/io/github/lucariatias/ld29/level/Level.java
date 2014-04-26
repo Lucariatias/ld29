@@ -17,6 +17,8 @@ public class Level {
 
     private TileSheet tileSheet;
 
+    private BufferedImage map;
+
     private Set<LevelObject> objects = new HashSet<>();
 
     public Level(Descent descent) {
@@ -38,6 +40,11 @@ public class Level {
 
     public void addObject(LevelObject object) {
         objects.add(object);
+    }
+
+    public void reset() {
+        objects.clear();
+        populate(map);
     }
 
     public void onTick() {
@@ -68,7 +75,7 @@ public class Level {
                 }
             }
         }
-        map.flush();
+        this.map = map;
     }
 
     private LevelObject getObject(Color colour) {
