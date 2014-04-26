@@ -22,7 +22,6 @@ public class Descent extends JPanel implements Runnable {
         setBackground(new Color(48, 0, 48));
         setPreferredSize(new Dimension(640, 480));
         setDoubleBuffered(true);
-
     }
 
     private void doTick() {
