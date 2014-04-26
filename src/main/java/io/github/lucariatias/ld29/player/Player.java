@@ -18,9 +18,9 @@ public class Player extends LevelObject {
     @Override
     public void render(Graphics graphics) {
         Graphics2D graphics2D = (Graphics2D) graphics;
-        graphics2D.rotate(Math.toRadians(angle));
+        graphics2D.rotate(Math.toRadians(angle), getLocation().getX() + (image.getWidth() / 2), getLocation().getY() + (image.getHeight() / 2));
         graphics2D.drawImage(image, getLocation().getX(), getLocation().getY(), null);
-        graphics2D.rotate(-Math.toRadians(angle));
+        graphics2D.rotate(-Math.toRadians(angle), getLocation().getX() + (image.getWidth() / 2), getLocation().getY() + (image.getHeight() / 2));
     }
 
     @Override
