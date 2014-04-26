@@ -24,7 +24,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>io.github.lucariatias.ld29.Game</mainClass>
+                            <mainClass>io.github.lucariatias.ld29.Descent</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
