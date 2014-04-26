@@ -12,7 +12,8 @@ public class Block extends LevelObject {
 
     @Override
     public void render(Graphics graphics) {
-
+        graphics.setColor(new Color(32, 32, 32));
+        graphics.fillRect(getLocation().getX(), getLocation().getY(), 32, 32);
     }
 
     @Override
