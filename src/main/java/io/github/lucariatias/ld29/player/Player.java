@@ -41,8 +41,12 @@ public class Player extends LevelObject {
             Location endLocation = new Location((int) Math.round((double) getLocation().getX() + ((double) image.getWidth() * 2D) * Math.sin(Math.toRadians(90 - angle))), (int) Math.round((double) getLocation().getY() + ((double) image.getHeight() * 2D) * Math.cos(Math.toRadians(90 - angle))));
             graphics.drawLine(startLocation.getX(), startLocation.getY(), endLocation.getX(), endLocation.getY());
         } else {
-                graphics.setColor(Color.RED);
-                graphics.drawOval(getLocation().getX() - explodeRadius, getLocation().getY() - explodeRadius, explodeRadius * 2, explodeRadius * 2);
+            graphics.setColor(Color.RED);
+            graphics.drawOval(getLocation().getX() - explodeRadius, getLocation().getY() - explodeRadius, explodeRadius * 2, explodeRadius * 2);
+            if (explodeRadius == 1280) {
+                String message = "[PRESS R TO RESTART]";
+                graphics.drawString(message, getLocation().getX() - ((int) graphics.getFontMetrics().getStringBounds(message, graphics).getWidth() / 2), getLocation().getY());
+            }
         }
     }
 
@@ -77,7 +81,7 @@ public class Player extends LevelObject {
                 die();
             }
         } else {
-            explodeRadius = explodeRadius < 1280 ? explodeRadius + 16 : explodeRadius;
+            explodeRadius = explodeRadius < 1280 ? explodeRadius + 16 : 1280;
         }
     }
 
