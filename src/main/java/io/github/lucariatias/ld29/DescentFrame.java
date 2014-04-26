@@ -22,7 +22,7 @@ public class DescentFrame extends JFrame {
 
     public DescentFrame() {
         add(new Descent(this));
-        setTitle("Descent v" + getClass().getPackage().getImplementationVersion());
+        setTitle("Descent");
         setResizable(false);
         setFocusable(true);
         pack();
