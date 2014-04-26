@@ -22,7 +22,7 @@ public class DescentFrame extends JFrame {
 
     public DescentFrame() {
         add(new Descent(this));
-        setTitle("Harmonic Moon");
+        setTitle("Descent v" + getClass().getPackage().getImplementationVersion());
         setResizable(false);
         setFocusable(true);
         pack();
