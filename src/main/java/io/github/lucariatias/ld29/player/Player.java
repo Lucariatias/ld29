@@ -41,7 +41,7 @@ public class Player extends LevelObject {
 
     @Override
     public Rectangle getBoundsAt(Location location) {
-        return new Rectangle(location.getX(), location.getY(), image.getWidth(), image.getHeight());
+        return new Rectangle(location.getX() - (image.getWidth() / 2), location.getY() - (image.getHeight() / 2), image.getWidth(), image.getHeight());
     }
 
     public int getAngle() {
