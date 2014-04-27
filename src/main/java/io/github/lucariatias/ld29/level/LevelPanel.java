@@ -3,6 +3,7 @@ package io.github.lucariatias.ld29.level;
 import io.github.lucariatias.ld29.Descent;
 import io.github.lucariatias.ld29.player.Camera;
 import io.github.lucariatias.ld29.player.Player;
+import io.github.lucariatias.ld29.sound.SoundPlayer;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -41,6 +42,18 @@ public class LevelPanel extends JPanel {
 
     public void setActive(boolean active) {
         this.active = active;
+        if (active) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    SoundPlayer soundPlayer = LevelPanel.this.descent.getSoundPlayer();
+                    soundPlayer.stopAll();
+                    soundPlayer.play(getClass().getResourceAsStream("/descent.ogg"));
+                }
+            }).start();
+        } else {
+            descent.getSoundPlayer().stopAll();
+        }
     }
 
     public int getCountDown() {
@@ -93,6 +106,14 @@ public class LevelPanel extends JPanel {
     public void reset() {
         countDown = 160;
         level.reset();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SoundPlayer soundPlayer = LevelPanel.this.descent.getSoundPlayer();
+                soundPlayer.stopAll();
+                soundPlayer.play(getClass().getResourceAsStream("/descent.ogg"));
+            }
+        }).start();
     }
 
 }
