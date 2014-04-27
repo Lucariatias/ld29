@@ -4,6 +4,7 @@ import io.github.lucariatias.ld29.Descent;
 import io.github.lucariatias.ld29.block.Block;
 import io.github.lucariatias.ld29.block.BreakableBlock;
 import io.github.lucariatias.ld29.pickup.LaserPickup;
+import io.github.lucariatias.ld29.pickup.LifePickup;
 import io.github.lucariatias.ld29.player.Player;
 import io.github.lucariatias.ld29.tile.TileSheet;
 
@@ -106,12 +107,20 @@ public class Level {
 
     private LevelObject getObject(Color colour) {
         switch (colour.getBlue()) {
-            case 0: return null;
-            case 1: return new Block(this, blockTileSheet.getImage(colour.getRed(), colour.getGreen()), getBlockBounds(colour));
-            case 2: return descent.getPlayer();
-            case 3: return new BreakableBlock(this, breakableBlockTileSheet.getImage(colour.getRed(), colour.getGreen()), getBlockBounds(colour));
-            case 4: return new LaserPickup(descent, this, pickupImage);
-            default: return null;
+            case 0:
+                return null;
+            case 1:
+                return new Block(this, blockTileSheet.getImage(colour.getRed(), colour.getGreen()), getBlockBounds(colour));
+            case 2:
+                return descent.getPlayer();
+            case 3:
+                return new BreakableBlock(this, breakableBlockTileSheet.getImage(colour.getRed(), colour.getGreen()), getBlockBounds(colour));
+            case 4:
+                return new LaserPickup(descent, this, pickupImage);
+            case 5:
+                return new LifePickup(descent, this, pickupImage);
+            default:
+                return null;
         }
     }
 
