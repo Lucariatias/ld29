@@ -61,7 +61,7 @@ public class Player extends LevelObject {
             if (explodeRadius == 1280) {
                 int score = 0;
                 score += distanceTravelled / 800;
-                score += artefactsCollected * 1000;
+                score += artefactsCollected * 50;
                 String[] messages = new String[] {"[SCORE: " + score + "]", "[PRESS R TO RESTART]", "[PRESS M TO RETURN TO THE MENU]"};
                 int y = getLocation().getY();
                 for (String message : messages) {
