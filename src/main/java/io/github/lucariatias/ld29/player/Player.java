@@ -34,6 +34,7 @@ public class Player extends LevelObject {
         super(level);
         this.descent = descent;
         this.image = image;
+        this.lives = descent.getOptions().getDifficulty().getLives();
     }
 
     @Override
