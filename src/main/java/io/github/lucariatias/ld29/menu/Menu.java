@@ -7,6 +7,7 @@ import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,11 +17,20 @@ public class Menu extends JPanel {
 
     private String title;
     private List<MenuItem> menuItems = new ArrayList<>();
+    private int mouseX;
+    private int mouseY;
 
     private static final int MENU_ITEM_WIDTH = 384;
 
     public Menu(Descent descent) {
         this.descent = descent;
+        addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent event) {
+                mouseX = event.getXOnScreen();
+                mouseY = event.getYOnScreen();
+            }
+        });
         addMouseListener(new MouseInputAdapter() {
             @Override
             public void mouseClicked(MouseEvent event) {
@@ -29,8 +39,7 @@ public class Menu extends JPanel {
                     int x = (getWidth() - MENU_ITEM_WIDTH) / 2;
                     int y = 128;
                     for (MenuItem menuItem : getMenuItems()) {
-                        Point mouse = MouseInfo.getPointerInfo().getLocation();
-                        if (mouse.getX() - getLocationOnScreen().getX() >= x && mouse.getY() - getLocationOnScreen().getY() >= y && mouse.getX() - getLocationOnScreen().getX() <= getWidth() - x && mouse.getY() - getLocationOnScreen().getY() <= y + 32 + getFontMetrics(font).getMaxAscent()) {
+                        if (mouseX - getLocationOnScreen().getX() >= x && mouseY - getLocationOnScreen().getY() >= y && mouseX - getLocationOnScreen().getX() <= getWidth() - x && mouseY - getLocationOnScreen().getY() <= y + 32 + getFontMetrics(font).getMaxAscent()) {
                             MenuSelectEvent menuSelectEvent = new MenuSelectEvent(Menu.this, menuItem);
                             Menu.this.descent.getEventManager().dispatchEvent(menuSelectEvent);
                             if (!menuSelectEvent.isCancelled()) {
@@ -56,8 +65,7 @@ public class Menu extends JPanel {
         int x = (getWidth() - MENU_ITEM_WIDTH) / 2;
         int y = 128;
         for (MenuItem menuItem : getMenuItems()) {
-            Point mouse = MouseInfo.getPointerInfo().getLocation();
-            if (mouse.getX() - getLocationOnScreen().getX() >= x && mouse.getY() - getLocationOnScreen().getY() >= y && mouse.getX() - getLocationOnScreen().getX() <= getWidth() - x && mouse.getY() - getLocationOnScreen().getY() <= y + 32 + graphics.getFontMetrics().getMaxAscent()) {
+            if (mouseX - getLocationOnScreen().getX() >= x && mouseY - getLocationOnScreen().getY() >= y && mouseX - getLocationOnScreen().getX() <= getWidth() - x && mouseY - getLocationOnScreen().getY() <= y + 32 + graphics.getFontMetrics().getMaxAscent()) {
                 graphics.setColor(Color.RED);
                 graphics.fillRoundRect(x - 8, y - 8, MENU_ITEM_WIDTH + 16, 32 + graphics.getFontMetrics().getMaxAscent() + 16, 16, 16);
                 graphics.setColor(Color.BLACK);
