@@ -11,6 +11,7 @@ public enum Difficulty {
     private Difficulty(int turningSpeed, int lives, int scoreMultiplier) {
         this.turningSpeed = turningSpeed;
         this.lives = lives;
+        this.scoreMultiplier = scoreMultiplier;
     }
 
     public int getTurningSpeed() {
