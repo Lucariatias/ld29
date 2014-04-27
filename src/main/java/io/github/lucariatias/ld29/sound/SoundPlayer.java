@@ -12,7 +12,7 @@ import static javax.sound.sampled.AudioSystem.getAudioInputStream;
 public class SoundPlayer {
 
     private final List<SourceDataLine> lines = Collections.synchronizedList(new ArrayList<SourceDataLine>());
-    private Set<String> looping;
+    private Set<String> looping = new HashSet<>();
 
     public void loop(String path) {
         setLooping(path, true);
