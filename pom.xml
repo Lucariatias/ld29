@@ -8,6 +8,13 @@
     <artifactId>ld29</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
+    <scm>
+        <connection>scm:git:https://github.com/Lucariatias/ld29.git</connection>
+        <url>https://github.com/Lucariatias/ld29</url>
+        <developerConnection>scm:git:https://github.com/Lucariatias/ld29.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
     <dependencies>
         <dependency>
             <groupId>org.yaml</groupId>
@@ -90,6 +97,5 @@
             </plugin>
         </plugins>
     </build>
-
 
 </project>
