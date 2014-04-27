@@ -34,6 +34,7 @@ public class KeyboardPlayerController extends PlayerController implements KeyLis
     public void keyReleased(KeyEvent event) {
         switch (event.getKeyCode()) {
             case VK_R: descent.getLevelPanel().reset(); break;
+            case VK_M: descent.getLevelPanel().setActive(false); descent.setPanel("menu"); break;
         }
     }
 
