@@ -1,5 +1,8 @@
 package io.github.lucariatias.ld29.notification;
 
+import io.github.lucariatias.ld29.Descent;
+import io.github.lucariatias.ld29.event.notification.NotificationEvent;
+
 import java.awt.*;
 
 public class NotificationManager {
@@ -7,12 +10,15 @@ public class NotificationManager {
     private static final int NOTIFICATION_TICKS = 40;
     private static final int NOTIFICATION_SPEED = 4;
 
+    private Descent descent;
+
     private int y;
     private String message = "";
     private int tick;
     private boolean active;
 
-    public NotificationManager() {
+    public NotificationManager(Descent descent) {
+        this.descent = descent;
         this.y = 480;
     }
 
@@ -42,10 +48,14 @@ public class NotificationManager {
     }
 
     public void showMessage(String message) {
-        this.message = message;
-        this.tick = 0;
-        this.y = 480;
-        this.active = true;
+        NotificationEvent notificationEvent = new NotificationEvent(message);
+        descent.getEventManager().dispatchEvent(notificationEvent);
+        if (!notificationEvent.isCancelled()) {
+            this.message = notificationEvent.getMessage();
+            this.tick = 0;
+            this.y = 480;
+            this.active = true;
+        }
     }
 
 }
