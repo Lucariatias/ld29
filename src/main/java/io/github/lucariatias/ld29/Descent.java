@@ -57,7 +57,7 @@ public class Descent extends JPanel implements Runnable {
         setPreferredSize(new Dimension(640, 480));
         setDoubleBuffered(true);
         this.logger = Logger.getLogger("Descent");
-        this.options = new Options();
+        this.options = new Options(this);
         try {
             this.titleFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/slkscr.ttf")).deriveFont(48F);
             this.font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/slkscr.ttf")).deriveFont(16F);

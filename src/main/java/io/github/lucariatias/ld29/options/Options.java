@@ -9,6 +9,10 @@ public class Options {
     private Difficulty difficulty = Difficulty.NORMAL;
     private boolean lightingEnabled = true;
 
+    public Options(Descent descent) {
+        this.descent=descent;
+    }
+
     public Difficulty getDifficulty() {
         return difficulty;
     }
