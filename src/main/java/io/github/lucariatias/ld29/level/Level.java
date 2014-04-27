@@ -21,7 +21,6 @@ public class Level {
     private BufferedImage map;
 
     private Set<LevelObject> objects = new HashSet<>();
-    private boolean active = true;
 
     public Level(Descent descent) {
         this.descent = descent;
@@ -45,19 +44,15 @@ public class Level {
     }
 
     public void reset() {
-        active = false;
         objects.clear();
         populate(map);
         descent.getPlayer().reset();
         descent.getPlayerController().reset();
-        active = true;
     }
 
     public void onTick() {
-        if (active) {
-            for (LevelObject object : objects) {
-                object.onTick();
-            }
+        for (LevelObject object : objects) {
+            object.onTick();
         }
     }
 
