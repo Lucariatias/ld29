@@ -4,6 +4,7 @@ import io.github.lucariatias.ld29.event.EventManager;
 import io.github.lucariatias.ld29.event.tick.TickEvent;
 import io.github.lucariatias.ld29.level.Level;
 import io.github.lucariatias.ld29.level.LevelPanel;
+import io.github.lucariatias.ld29.menu.MainMenu;
 import io.github.lucariatias.ld29.notification.NotificationManager;
 import io.github.lucariatias.ld29.player.KeyboardPlayerController;
 import io.github.lucariatias.ld29.player.Player;
@@ -31,6 +32,9 @@ public class Descent extends JPanel implements Runnable {
     private KeyboardPlayerController playerController;
     private Player player;
 
+    private Font titleFont;
+    private Font font;
+
     public Descent(DescentFrame frame) {
         this.frame = frame;
         CardLayout layout = new CardLayout();
@@ -38,6 +42,12 @@ public class Descent extends JPanel implements Runnable {
         setBackground(new Color(48, 0, 48));
         setPreferredSize(new Dimension(640, 480));
         setDoubleBuffered(true);
+        try {
+            this.titleFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/slkscr.ttf")).deriveFont(48F);
+            this.font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/slkscr.ttf")).deriveFont(16F);
+        } catch (FontFormatException | IOException exception) {
+            exception.printStackTrace();
+        }
         this.eventManager = new EventManager(this);
         this.notificationManager = new NotificationManager();
         BufferedImage map = null;
@@ -46,6 +56,8 @@ public class Descent extends JPanel implements Runnable {
         } catch (IOException exception) {
             exception.printStackTrace();
         }
+        MainMenu menu = new MainMenu(this);
+        add(menu, "menu");
         if (map != null) {
             Level level = new Level(this);
             try {
@@ -57,8 +69,14 @@ public class Descent extends JPanel implements Runnable {
             frame.addKeyListener(playerController);
             level.populate(map);
             this.levelPanel = new LevelPanel(this, level, player);
-            add(levelPanel);
+            add(levelPanel, "level");
         }
+        setPanel("menu");
+    }
+
+    public void setPanel(String panel) {
+        CardLayout layout = (CardLayout) getLayout();
+        layout.show(this, panel);
     }
 
     public EventManager getEventManager() {
@@ -114,5 +132,14 @@ public class Descent extends JPanel implements Runnable {
 
     public PlayerController getPlayerController() {
         return playerController;
+    }
+
+    public Font getTitleFont() {
+        return titleFont;
+    }
+
+    @Override
+    public Font getFont() {
+        return font;
     }
 }

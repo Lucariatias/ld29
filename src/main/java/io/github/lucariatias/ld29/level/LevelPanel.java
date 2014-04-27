@@ -30,6 +30,7 @@ public class LevelPanel extends JPanel {
 
     @Override
     public void paintComponent(Graphics graphics) {
+        graphics.setFont(descent.getFont());
         Graphics2D graphics2D = (Graphics2D) graphics;
         graphics2D.translate(-camera.getLocation().getX(), -camera.getLocation().getY());
         render(graphics);
