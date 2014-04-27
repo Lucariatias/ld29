@@ -6,7 +6,6 @@ import io.github.lucariatias.ld29.event.plugin.PluginEnableEvent;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -32,7 +31,7 @@ public class PluginManager {
     }
 
     public void loadPlugins() {
-        if (pluginsDirectory.exists()) {
+        /*if (pluginsDirectory.exists()) {
             for (File file : pluginsDirectory.listFiles(new FileFilter() {
                 @Override
                 public boolean accept(File file) {
@@ -43,7 +42,7 @@ public class PluginManager {
             }
         } else {
             pluginsDirectory.mkdir();
-        }
+        }*/
     }
 
     public Plugin loadPlugin(File file) {
