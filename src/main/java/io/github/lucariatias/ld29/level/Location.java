@@ -30,6 +30,10 @@ public class Location {
         return ((x - location.getX()) * (x - location.getX())) + ((y - location.getY()) * (y - location.getY()));
     }
 
+    public int distance(Location location) {
+        return (int) Math.round(Math.sqrt(distanceSquared(location)));
+    }
+
     public Location getRelative(Vector vector) {
         return new Location(x + vector.getHorizontalComponent(), y + vector.getVerticalComponent());
     }

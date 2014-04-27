@@ -1,10 +1,7 @@
 package io.github.lucariatias.ld29.player;
 
 import io.github.lucariatias.ld29.Descent;
-import io.github.lucariatias.ld29.event.player.PlayerCollectPickupEvent;
-import io.github.lucariatias.ld29.event.player.PlayerDeathEvent;
-import io.github.lucariatias.ld29.event.player.PlayerLivesChangeEvent;
-import io.github.lucariatias.ld29.event.player.PlayerShootEvent;
+import io.github.lucariatias.ld29.event.player.*;
 import io.github.lucariatias.ld29.level.Level;
 import io.github.lucariatias.ld29.level.LevelObject;
 import io.github.lucariatias.ld29.level.Location;
@@ -22,6 +19,8 @@ public class Player extends LevelObject {
 
     private int speed = 4;
     private int angle;
+
+    private int distanceTravelled;
 
     private int laserCooldown;
 
@@ -60,8 +59,15 @@ public class Player extends LevelObject {
             graphics.setColor(Color.RED);
             graphics.drawOval(getLocation().getX() - explodeRadius, getLocation().getY() - explodeRadius, explodeRadius * 2, explodeRadius * 2);
             if (explodeRadius == 1280) {
-                String message = "[PRESS R TO RESTART]";
-                graphics.drawString(message, getLocation().getX() - ((int) graphics.getFontMetrics().getStringBounds(message, graphics).getWidth() / 2), getLocation().getY());
+                int score = 0;
+                score += distanceTravelled / 800;
+                score += artefactsCollected * 1000;
+                String[] messages = new String[] {"[SCORE: " + score + "]", "[PRESS R TO RESTART]", "[PRESS M TO RETURN TO THE MENU]"};
+                int y = getLocation().getY();
+                for (String message : messages) {
+                    y += 32;
+                    graphics.drawString(message, getLocation().getX() - ((int) graphics.getFontMetrics().getStringBounds(message, graphics).getWidth() / 2), y);
+                }
             }
         }
     }
@@ -87,13 +93,25 @@ public class Player extends LevelObject {
         this.angle = angle;
     }
 
+    public int getDistanceTravelled() {
+        return distanceTravelled;
+    }
+
+    public void setDistanceTravelled(int distanceTravelled) {
+        this.distanceTravelled = distanceTravelled;
+    }
+
     @Override
     public void onTick() {
         if (!dead) {
             setDirection(new Vector((int) Math.round(speed * Math.sin(Math.toRadians(90 - angle))), (int) Math.round(speed * Math.cos(Math.toRadians(90 - angle)))));
             Location newLocation = getLocation().getRelative(getDirection());
             if (!isCollision(newLocation)) {
-                setLocation(newLocation);
+                PlayerMoveEvent playerMoveEvent = new PlayerMoveEvent(this, getLocation(), newLocation);
+                if (!playerMoveEvent.isCancelled()) {
+                    setLocation(playerMoveEvent.getTo());
+                    distanceTravelled += playerMoveEvent.getFrom().distance(playerMoveEvent.getTo());
+                }
             } else {
                 LevelObject collidingObject = getCollision(newLocation);
                 if (collidingObject instanceof Pickup) {
@@ -191,6 +209,8 @@ public class Player extends LevelObject {
         angle = 0;
         laserEnabled = false;
         lives = descent.getOptions().getDifficulty().getLives();
+        artefactsCollected = 0;
+        distanceTravelled = 0;
     }
 
 }
