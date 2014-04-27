@@ -33,7 +33,6 @@ public class Descent extends JPanel implements Runnable {
     private Options options;
 
     private LevelPanel levelPanel;
-    private LevelPanel defaultLevelPanel;
 
     private EventManager eventManager;
     private NotificationManager notificationManager;
@@ -85,7 +84,6 @@ public class Descent extends JPanel implements Runnable {
             frame.addKeyListener(playerController);
             level.populate(map);
             this.levelPanel = new LevelPanel(this, level, player);
-            this.defaultLevelPanel = levelPanel;
             add(levelPanel, "level");
         }
         setPanel("menu");
@@ -139,11 +137,6 @@ public class Descent extends JPanel implements Runnable {
 
     public void setLevelPanel(LevelPanel levelPanel) {
         this.levelPanel = levelPanel;
-    }
-
-    public void restoreDefaultLevelPanel() {
-        this.levelPanel = defaultLevelPanel;
-        levelPanel.reset();
     }
 
     public Player getPlayer() {
