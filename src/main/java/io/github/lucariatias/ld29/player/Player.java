@@ -211,7 +211,7 @@ public class Player extends LevelObject {
     }
 
     public int getScore() {
-        return (distanceTravelled / 800) + (artefactsCollected * 50);
+        return ((distanceTravelled / 800) + (artefactsCollected * 50)) * descent.getOptions().getDifficulty().getScoreMultiplier();
     }
 
 }
