@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class NotificationManager {
 
-    private static final int NOTIFICATION_TICKS = 40;
+    private static final int NOTIFICATION_TICKS = 60;
     private static final int NOTIFICATION_SPEED = 4;
 
     private Descent descent;
