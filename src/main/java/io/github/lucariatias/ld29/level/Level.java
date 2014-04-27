@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,7 +21,7 @@ public class Level {
 
     private BufferedImage map;
 
-    private Set<LevelObject> objects = new HashSet<>();
+    private Set<LevelObject> objects = Collections.synchronizedSet(new HashSet<LevelObject>());
 
     public Level(Descent descent) {
         this.descent = descent;
@@ -51,8 +52,10 @@ public class Level {
     }
 
     public void onTick() {
-        for (LevelObject object : objects) {
-            object.onTick();
+        synchronized (objects) {
+            for (LevelObject object : objects) {
+                object.onTick();
+            }
         }
     }
 
