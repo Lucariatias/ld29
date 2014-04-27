@@ -10,6 +10,7 @@ import io.github.lucariatias.ld29.player.KeyboardPlayerController;
 import io.github.lucariatias.ld29.player.Player;
 import io.github.lucariatias.ld29.player.PlayerController;
 import io.github.lucariatias.ld29.plugin.PluginManager;
+import io.github.lucariatias.ld29.sound.SoundPlayer;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -34,6 +35,8 @@ public class Descent extends JPanel implements Runnable {
     private NotificationManager notificationManager;
     private PluginManager pluginManager;
 
+    private SoundPlayer soundPlayer;
+
     private KeyboardPlayerController playerController;
     private Player player;
 
@@ -55,7 +58,7 @@ public class Descent extends JPanel implements Runnable {
             exception.printStackTrace();
         }
         this.eventManager = new EventManager(this);
-        this.notificationManager = new NotificationManager();
+        this.notificationManager = new NotificationManager(this);
         this.pluginManager = new PluginManager(this);
         BufferedImage map = null;
         try {
@@ -97,6 +100,14 @@ public class Descent extends JPanel implements Runnable {
 
     public NotificationManager getNotificationManager() {
         return notificationManager;
+    }
+
+    public PluginManager getPluginManager() {
+        return pluginManager;
+    }
+
+    public SoundPlayer getSoundPlayer() {
+        return soundPlayer;
     }
 
     public LevelPanel getLevelPanel() {
