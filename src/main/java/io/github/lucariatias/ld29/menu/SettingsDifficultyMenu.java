@@ -12,6 +12,7 @@ public class SettingsDifficultyMenu extends Menu {
             @Override
             public void run() {
                 getDescent().getOptions().setDifficulty(Difficulty.EASY);
+                getDescent().getPlayerController().setTurningSpeed(Difficulty.EASY.getTurningSpeed());
                 getDescent().setPanel("settings");
             }
         }));
@@ -19,6 +20,7 @@ public class SettingsDifficultyMenu extends Menu {
             @Override
             public void run() {
                 getDescent().getOptions().setDifficulty(Difficulty.NORMAL);
+                getDescent().getPlayerController().setTurningSpeed(Difficulty.NORMAL.getTurningSpeed());
                 getDescent().setPanel("settings");
             }
         }));
@@ -26,6 +28,7 @@ public class SettingsDifficultyMenu extends Menu {
             @Override
             public void run() {
                 getDescent().getOptions().setDifficulty(Difficulty.HARD);
+                getDescent().getPlayerController().setTurningSpeed(Difficulty.HARD.getTurningSpeed());
                 getDescent().setPanel("settings");
             }
         }));
@@ -33,6 +36,7 @@ public class SettingsDifficultyMenu extends Menu {
             @Override
             public void run() {
                 getDescent().getOptions().setDifficulty(Difficulty.INSANE);
+                getDescent().getPlayerController().setTurningSpeed(Difficulty.INSANE.getTurningSpeed());
                 getDescent().setPanel("settings");
             }
         }));

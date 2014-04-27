@@ -2,11 +2,19 @@ package io.github.lucariatias.ld29.player;
 
 public abstract class PlayerController {
 
-    private static final int TURNING_SPEED = 5;
+    private int turningSpeed = 5;
 
     private Player player;
 
     private int approachingAngle;
+
+    public void setTurningSpeed(int turningSpeed) {
+        this.turningSpeed = turningSpeed;
+    }
+
+    public int getTurningSpeed() {
+        return turningSpeed;
+    }
 
     public PlayerController(Player player) {
         this.player = player;
@@ -26,9 +34,9 @@ public abstract class PlayerController {
 
     public void onTick() {
         if (approachingAngle > player.getAngle()) {
-            if (approachingAngle - player.getAngle() >= 180) player.setAngle(player.getAngle() - TURNING_SPEED); else player.setAngle(player.getAngle() + TURNING_SPEED);
+            if (approachingAngle - player.getAngle() >= 180) player.setAngle(player.getAngle() - turningSpeed); else player.setAngle(player.getAngle() + turningSpeed);
         } else if (approachingAngle < player.getAngle()) {
-            if (player.getAngle() - approachingAngle >= 180) player.setAngle(player.getAngle() + TURNING_SPEED); else player.setAngle(player.getAngle() - TURNING_SPEED);
+            if (player.getAngle() - approachingAngle >= 180) player.setAngle(player.getAngle() + turningSpeed); else player.setAngle(player.getAngle() - turningSpeed);
         }
         while (player.getAngle() >= 360) {
             player.setAngle(player.getAngle() - 360);
