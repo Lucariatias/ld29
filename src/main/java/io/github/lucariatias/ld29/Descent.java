@@ -2,6 +2,7 @@ package io.github.lucariatias.ld29;
 
 import io.github.lucariatias.ld29.level.Level;
 import io.github.lucariatias.ld29.level.LevelPanel;
+import io.github.lucariatias.ld29.notification.NotificationManager;
 import io.github.lucariatias.ld29.player.KeyboardPlayerController;
 import io.github.lucariatias.ld29.player.Player;
 import io.github.lucariatias.ld29.player.PlayerController;
@@ -22,6 +23,8 @@ public class Descent extends JPanel implements Runnable {
 
     private LevelPanel levelPanel;
 
+    private NotificationManager notificationManager;
+
     private KeyboardPlayerController playerController;
     private Player player;
 
@@ -32,6 +35,7 @@ public class Descent extends JPanel implements Runnable {
         setBackground(new Color(48, 0, 48));
         setPreferredSize(new Dimension(640, 480));
         setDoubleBuffered(true);
+        this.notificationManager = new NotificationManager();
         BufferedImage map = null;
         try {
             map = ImageIO.read(getClass().getResourceAsStream("/map.png"));
@@ -41,16 +45,20 @@ public class Descent extends JPanel implements Runnable {
         if (map != null) {
             Level level = new Level(this);
             try {
-                player = new Player(level, ImageIO.read(getClass().getResourceAsStream("/player.png")));
+                player = new Player(this, level, ImageIO.read(getClass().getResourceAsStream("/player.png")));
             } catch (IOException exception) {
                 exception.printStackTrace();
             }
             playerController = new KeyboardPlayerController(player);
             frame.addKeyListener(playerController);
             level.populate(map);
-            this.levelPanel = new LevelPanel(level, player);
+            this.levelPanel = new LevelPanel(this, level, player);
             add(levelPanel);
         }
+    }
+
+    public NotificationManager getNotificationManager() {
+        return notificationManager;
     }
 
     public LevelPanel getLevelPanel() {
@@ -64,6 +72,7 @@ public class Descent extends JPanel implements Runnable {
     private void doTick() {
         playerController.onTick();
         levelPanel.onTick();
+        notificationManager.onTick();
     }
 
     @Override

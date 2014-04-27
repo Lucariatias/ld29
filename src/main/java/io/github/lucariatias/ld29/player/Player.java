@@ -1,5 +1,6 @@
 package io.github.lucariatias.ld29.player;
 
+import io.github.lucariatias.ld29.Descent;
 import io.github.lucariatias.ld29.level.Level;
 import io.github.lucariatias.ld29.level.LevelObject;
 import io.github.lucariatias.ld29.level.Location;
@@ -10,6 +11,8 @@ import java.awt.image.BufferedImage;
 
 public class Player extends LevelObject {
 
+    private Descent descent;
+
     private BufferedImage image;
 
     private int speed = 4;
@@ -18,8 +21,9 @@ public class Player extends LevelObject {
     private boolean dead;
     private int explodeRadius = 1;
 
-    public Player(Level level, BufferedImage image) {
+    public Player(Descent descent, Level level, BufferedImage image) {
         super(level);
+        this.descent = descent;
         this.image = image;
     }
 
@@ -87,6 +91,7 @@ public class Player extends LevelObject {
 
     public void die() {
         dead = true;
+        descent.getNotificationManager().showMessage("You died.");
     }
 
     public void reset() {
