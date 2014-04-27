@@ -1,6 +1,7 @@
 package io.github.lucariatias.ld29.player;
 
 import io.github.lucariatias.ld29.Descent;
+import io.github.lucariatias.ld29.event.player.PlayerCollectPickupEvent;
 import io.github.lucariatias.ld29.event.player.PlayerDeathEvent;
 import io.github.lucariatias.ld29.event.player.PlayerLivesChangeEvent;
 import io.github.lucariatias.ld29.event.player.PlayerShootEvent;
@@ -29,6 +30,7 @@ public class Player extends LevelObject {
 
     private int lives;
     private boolean laserEnabled;
+    private int artefactsCollected;
 
     public Player(Descent descent, Level level, BufferedImage image) {
         super(level);
@@ -95,7 +97,11 @@ public class Player extends LevelObject {
             } else {
                 LevelObject collidingObject = getCollision(newLocation);
                 if (collidingObject instanceof Pickup) {
-                    ((Pickup) collidingObject).onPickup();
+                    PlayerCollectPickupEvent playerCollectPickupEvent = new PlayerCollectPickupEvent(this, (Pickup) collidingObject);
+                    descent.getEventManager().dispatchEvent(playerCollectPickupEvent);
+                    if (!playerCollectPickupEvent.isCancelled()) {
+                        playerCollectPickupEvent.getPickup().onPickup();
+                    }
                 } else {
                     die();
                 }
@@ -150,6 +156,14 @@ public class Player extends LevelObject {
 
     public void setLaserCooldown(int laserCooldown) {
         this.laserCooldown = laserCooldown;
+    }
+
+    public int getArtefactsCollected() {
+        return artefactsCollected;
+    }
+
+    public void setArtefactsCollected(int artefactsCollected) {
+        this.artefactsCollected = artefactsCollected;
     }
 
     @Override

@@ -3,6 +3,7 @@ package io.github.lucariatias.ld29.level;
 import io.github.lucariatias.ld29.Descent;
 import io.github.lucariatias.ld29.block.Block;
 import io.github.lucariatias.ld29.block.BreakableBlock;
+import io.github.lucariatias.ld29.pickup.ArtefactPickup;
 import io.github.lucariatias.ld29.pickup.LaserPickup;
 import io.github.lucariatias.ld29.pickup.LifePickup;
 import io.github.lucariatias.ld29.player.Player;
@@ -127,6 +128,8 @@ public class Level {
                 return new SceneryObject(this, scenerySpriteSheet.getSprite(0, 0, 5));
             case 7:
                 return new SceneryObject(this, scenerySpriteSheet.getSprite(0, 1, 5));
+            case 8:
+                return new ArtefactPickup(descent, this, pickupImage);
             default:
                 return null;
         }
