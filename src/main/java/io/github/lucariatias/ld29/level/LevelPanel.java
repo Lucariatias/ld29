@@ -12,6 +12,7 @@ public class LevelPanel extends JPanel {
     private Descent descent;
     private Level level;
     private Camera camera;
+    private boolean active;
 
     public LevelPanel(Descent descent, Level level, Player player) {
         this.descent = descent;
@@ -23,9 +24,19 @@ public class LevelPanel extends JPanel {
         return camera;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     public void onTick() {
-        level.onTick();
-        camera.onTick();
+        if (active) {
+            level.onTick();
+            camera.onTick();
+        }
     }
 
     @Override

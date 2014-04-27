@@ -11,7 +11,7 @@ public class MainMenu extends Menu {
         addMenuItem("Play", new Runnable() {
             @Override
             public void run() {
-                descent.setPanel("level");
+                descent.setPanel("level"); descent.getLevelPanel().setActive(true);
             }
         });
         addMenuItem("Options", new Runnable() {
