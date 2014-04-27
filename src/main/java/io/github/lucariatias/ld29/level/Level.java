@@ -21,7 +21,7 @@ public class Level {
 
     private BufferedImage map;
 
-    private Set<LevelObject> objects = Collections.synchronizedSet(new HashSet<LevelObject>());
+    private final Set<LevelObject> objects = Collections.synchronizedSet(new HashSet<LevelObject>());
 
     public Level(Descent descent) {
         this.descent = descent;
