@@ -57,9 +57,12 @@ public class LevelPanel extends JPanel {
             graphics.fillOval(288, 208, 64, 64);
             graphics.setColor(Color.RED);
             graphics.drawOval(288, 208, 64, 64);
-            if (countDown > 120) graphics.drawString("3", 320 - ((int) graphics.getFontMetrics().getStringBounds("3", graphics).getWidth() / 2), 244);
-            else if (countDown > 80) graphics.drawString("2", 320 - ((int) graphics.getFontMetrics().getStringBounds("2", graphics).getWidth() / 2), 244);
-            else if (countDown > 4) graphics.drawString("1", 320 - ((int) graphics.getFontMetrics().getStringBounds("1", graphics).getWidth() / 2), 244);
+            if (countDown > 120)
+                graphics.drawString("3", 320 - ((int) graphics.getFontMetrics().getStringBounds("3", graphics).getWidth() / 2), 244);
+            else if (countDown > 80)
+                graphics.drawString("2", 320 - ((int) graphics.getFontMetrics().getStringBounds("2", graphics).getWidth() / 2), 244);
+            else if (countDown > 4)
+                graphics.drawString("1", 320 - ((int) graphics.getFontMetrics().getStringBounds("1", graphics).getWidth() / 2), 244);
         }
     }
 
