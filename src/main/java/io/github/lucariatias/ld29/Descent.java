@@ -4,8 +4,12 @@ import io.github.lucariatias.ld29.event.EventManager;
 import io.github.lucariatias.ld29.event.tick.TickEvent;
 import io.github.lucariatias.ld29.level.Level;
 import io.github.lucariatias.ld29.level.LevelPanel;
+import io.github.lucariatias.ld29.menu.SettingsDifficultyMenu;
 import io.github.lucariatias.ld29.menu.MainMenu;
+import io.github.lucariatias.ld29.menu.SettingsLightingMenu;
+import io.github.lucariatias.ld29.menu.SettingsMenu;
 import io.github.lucariatias.ld29.notification.NotificationManager;
+import io.github.lucariatias.ld29.options.Options;
 import io.github.lucariatias.ld29.player.KeyboardPlayerController;
 import io.github.lucariatias.ld29.player.Player;
 import io.github.lucariatias.ld29.player.PlayerController;
@@ -29,6 +33,8 @@ public class Descent extends JPanel implements Runnable {
 
     private Logger logger;
 
+    private Options options;
+
     private LevelPanel levelPanel;
 
     private EventManager eventManager;
@@ -51,6 +57,7 @@ public class Descent extends JPanel implements Runnable {
         setPreferredSize(new Dimension(640, 480));
         setDoubleBuffered(true);
         this.logger = Logger.getLogger("Descent");
+        this.options = new Options();
         try {
             this.titleFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/slkscr.ttf")).deriveFont(48F);
             this.font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/slkscr.ttf")).deriveFont(16F);
@@ -83,7 +90,17 @@ public class Descent extends JPanel implements Runnable {
             add(levelPanel, "level");
         }
         setPanel("menu");
+        SettingsMenu settingsMenu = new SettingsMenu(this);
+        add(settingsMenu, "settings");
+        SettingsDifficultyMenu settingsDifficultyMenu = new SettingsDifficultyMenu(this);
+        add(settingsDifficultyMenu, "settings.difficulty");
+        SettingsLightingMenu settingsLightingMenu = new SettingsLightingMenu(this);
+        add(settingsLightingMenu, "settings.lighting");
         pluginManager.loadPlugins();
+    }
+
+    public DescentFrame getFrame() {
+        return frame;
     }
 
     public void setPanel(String panel) {
@@ -93,6 +110,10 @@ public class Descent extends JPanel implements Runnable {
 
     public Logger getLogger() {
         return logger;
+    }
+
+    public Options getOptions() {
+        return options;
     }
 
     public EventManager getEventManager() {

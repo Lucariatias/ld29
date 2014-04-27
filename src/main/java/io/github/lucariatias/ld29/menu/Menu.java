@@ -92,4 +92,7 @@ public class Menu extends JPanel {
         addMenuItem(new MenuItem(title, runnable));
     }
 
+    public Descent getDescent() {
+        return descent;
+    }
 }

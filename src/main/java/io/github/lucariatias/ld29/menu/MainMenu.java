@@ -4,19 +4,20 @@ import io.github.lucariatias.ld29.Descent;
 
 public class MainMenu extends Menu {
 
-
-    public MainMenu(final Descent descent) {
+    public MainMenu(Descent descent) {
         super(descent);
         setTitle("DESCENT");
         addMenuItem("Play", new Runnable() {
             @Override
             public void run() {
-                descent.setPanel("level"); descent.getLevelPanel().setActive(true);
+                getDescent().setPanel("level"); getDescent().getLevelPanel().setActive(true);
             }
         });
         addMenuItem("Options", new Runnable() {
             @Override
-            public void run() {}
+            public void run() {
+                getDescent().setPanel("settings");
+            }
         });
         addMenuItem("Exit", new Runnable() {
             @Override

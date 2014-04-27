@@ -68,7 +68,7 @@ public class LevelPanel extends JPanel {
         graphics2D.translate(-camera.getLocation().getX(), -camera.getLocation().getY());
         render(graphics);
         graphics2D.translate(camera.getLocation().getX(), camera.getLocation().getY());
-        graphics.drawImage(lighting, 0, 0, null);
+        if (descent.getOptions().isLightingEnabled()) graphics.drawImage(lighting, 0, 0, null);
         descent.getNotificationManager().render(graphics);
         if (countDown > 0) {
             graphics.setColor(Color.BLACK);
@@ -79,7 +79,7 @@ public class LevelPanel extends JPanel {
                 graphics.drawString("3", 320 - ((int) graphics.getFontMetrics().getStringBounds("3", graphics).getWidth() / 2), 244);
             else if (countDown > 80)
                 graphics.drawString("2", 320 - ((int) graphics.getFontMetrics().getStringBounds("2", graphics).getWidth() / 2), 244);
-            else if (countDown > 4)
+            else
                 graphics.drawString("1", 320 - ((int) graphics.getFontMetrics().getStringBounds("1", graphics).getWidth() / 2), 244);
         }
     }
