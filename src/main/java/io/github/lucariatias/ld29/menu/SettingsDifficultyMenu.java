@@ -7,6 +7,7 @@ public class SettingsDifficultyMenu extends Menu {
 
     public SettingsDifficultyMenu(Descent descent) {
         super(descent);
+        setTitle("Difficulty settings");
         addMenuItem(new MenuItem("Easy", new Runnable() {
             @Override
             public void run() {

@@ -6,6 +6,7 @@ public class SettingsLightingMenu extends Menu {
 
     public SettingsLightingMenu(Descent descent) {
         super(descent);
+        setTitle("Lighting settings");
         addMenuItem("Enable lighting", new Runnable() {
             @Override
             public void run() {
