@@ -169,6 +169,7 @@ public class Player extends LevelObject {
         explodeRadius = 1;
         angle = 0;
         laserEnabled = false;
+        lives = descent.getOptions().getDifficulty().getLives();
     }
 
 }
