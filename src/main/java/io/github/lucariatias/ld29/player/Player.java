@@ -181,6 +181,15 @@ public class Player extends LevelObject {
         this.artefactsCollected = artefactsCollected;
     }
 
+    public boolean isDead() {
+        return dead;
+    }
+
+    public void setDead(boolean dead) {
+        if (dead) descent.getEventManager().dispatchEvent(new PlayerDeathEvent(this));
+        this.dead = dead;
+    }
+
     @Override
     public void die() {
         if (lives == 1) {
