@@ -5,17 +5,17 @@ import io.github.lucariatias.ld29.level.Level;
 
 import java.awt.image.BufferedImage;
 
-public class LaserPickup extends Pickup {
+public class LifePickup extends Pickup {
 
-    public LaserPickup(Descent descent, Level level, BufferedImage image) {
+    public LifePickup(Descent descent, Level level, BufferedImage image) {
         super(descent, level, image);
-        setName("Laser");
+        setName("Life");
     }
 
     @Override
     public void onPickup() {
         super.onPickup();
-        getDescent().getPlayer().setLaserEnabled(true);
+        getDescent().getPlayer().setLives(getDescent().getPlayer().getLives() + 1);
         die();
     }
 

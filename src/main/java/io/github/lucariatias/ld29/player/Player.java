@@ -2,6 +2,7 @@ package io.github.lucariatias.ld29.player;
 
 import io.github.lucariatias.ld29.Descent;
 import io.github.lucariatias.ld29.event.player.PlayerDeathEvent;
+import io.github.lucariatias.ld29.event.player.PlayerLivesChangeEvent;
 import io.github.lucariatias.ld29.event.player.PlayerShootEvent;
 import io.github.lucariatias.ld29.level.Level;
 import io.github.lucariatias.ld29.level.LevelObject;
@@ -26,6 +27,7 @@ public class Player extends LevelObject {
     private boolean dead;
     private int explodeRadius = 1;
 
+    private int lives;
     private boolean laserEnabled;
 
     public Player(Descent descent, Level level, BufferedImage image) {
@@ -115,6 +117,18 @@ public class Player extends LevelObject {
         }
     }
 
+    public int getLives() {
+        return lives;
+    }
+
+    public void setLives(int lives) {
+        PlayerLivesChangeEvent playerLivesChangeEvent = new PlayerLivesChangeEvent(this, this.lives, lives);
+        descent.getEventManager().dispatchEvent(playerLivesChangeEvent);
+        if (!playerLivesChangeEvent.isCancelled()) {
+            this.lives = playerLivesChangeEvent.getNewLives();
+        }
+    }
+
     public boolean isLaserEnabled() {
         return laserEnabled;
     }
@@ -133,16 +147,21 @@ public class Player extends LevelObject {
 
     @Override
     public void die() {
-        descent.getEventManager().dispatchEvent(new PlayerDeathEvent(this));
-        dead = true;
-        descent.getNotificationManager().showMessage("You died.");
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                descent.getSoundPlayer().play(getClass().getResourceAsStream("/explode.ogg"));
-            }
-        }).start();
-
+        if (lives == 1) {
+            descent.getEventManager().dispatchEvent(new PlayerDeathEvent(this));
+            dead = true;
+            descent.getNotificationManager().showMessage("You died.");
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    descent.getSoundPlayer().play(getClass().getResourceAsStream("/explode.ogg"));
+                }
+            }).start();
+        } else {
+            setLives(getLives() - 1);
+            angle = angle - 180;
+            descent.getNotificationManager().showMessage(lives + " lives remaining.");
+        }
     }
 
     public void reset() {

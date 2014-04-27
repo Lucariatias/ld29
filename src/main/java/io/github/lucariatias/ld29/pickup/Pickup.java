@@ -20,6 +20,7 @@ public abstract class Pickup extends LevelObject {
 
     public Pickup(Descent descent, Level level, BufferedImage image) {
         super(level);
+        setSolid(true);
         this.image = image;
         this.descent = descent;
     }
