@@ -43,7 +43,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>io.github.lucariatias.ld29.Descent</mainClass>
+                            <mainClass>io.github.lucariatias.ld29.DescentFrame</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
