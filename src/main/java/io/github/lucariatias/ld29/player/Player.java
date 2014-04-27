@@ -59,10 +59,7 @@ public class Player extends LevelObject {
             graphics.setColor(Color.RED);
             graphics.drawOval(getLocation().getX() - explodeRadius, getLocation().getY() - explodeRadius, explodeRadius * 2, explodeRadius * 2);
             if (explodeRadius == 1280) {
-                int score = 0;
-                score += distanceTravelled / 800;
-                score += artefactsCollected * 50;
-                String[] messages = new String[] {"[SCORE: " + score + "]", "[PRESS R TO RESTART]", "[PRESS M TO RETURN TO THE MENU]"};
+                String[] messages = new String[] {"[SCORE: " + getScore() + "]", "[PRESS R TO RESTART]", "[PRESS M TO RETURN TO THE MENU]"};
                 int y = getLocation().getY();
                 for (String message : messages) {
                     y += 32;
@@ -211,6 +208,10 @@ public class Player extends LevelObject {
         lives = descent.getOptions().getDifficulty().getLives();
         artefactsCollected = 0;
         distanceTravelled = 0;
+    }
+
+    public int getScore() {
+        return (distanceTravelled / 800) + (artefactsCollected * 50);
     }
 
 }
