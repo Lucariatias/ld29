@@ -6,6 +6,8 @@ import io.github.lucariatias.ld29.block.BreakableBlock;
 import io.github.lucariatias.ld29.pickup.LaserPickup;
 import io.github.lucariatias.ld29.pickup.LifePickup;
 import io.github.lucariatias.ld29.player.Player;
+import io.github.lucariatias.ld29.scenery.Waterfall;
+import io.github.lucariatias.ld29.sprite.SpriteSheet;
 import io.github.lucariatias.ld29.tile.TileSheet;
 
 import javax.imageio.ImageIO;
@@ -24,6 +26,7 @@ public class Level {
     private TileSheet breakableBlockTileSheet;
 
     private BufferedImage pickupImage;
+    private SpriteSheet waterfallSpriteSheet;
 
     private BufferedImage map;
 
@@ -36,6 +39,7 @@ public class Level {
             blockTileSheet = new TileSheet(ImageIO.read(getClass().getResourceAsStream("/tiles.png")), 32, 32);
             breakableBlockTileSheet = new TileSheet(ImageIO.read(getClass().getResourceAsStream("/tiles_breakable.png")), 32, 32);
             pickupImage = ImageIO.read(getClass().getResourceAsStream("/pickup.png"));
+            waterfallSpriteSheet = new SpriteSheet(ImageIO.read(getClass().getResourceAsStream("/waterfall.png")), 32, 32);
         } catch (IOException exception) {
             exception.printStackTrace();
         }
@@ -119,6 +123,8 @@ public class Level {
                 return new LaserPickup(descent, this, pickupImage);
             case 5:
                 return new LifePickup(descent, this, pickupImage);
+            case 6:
+                return new Waterfall(this, waterfallSpriteSheet.getSprite(0, 0, 5));
             default:
                 return null;
         }
