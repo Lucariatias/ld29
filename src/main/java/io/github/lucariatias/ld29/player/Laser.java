@@ -86,9 +86,7 @@ public class Laser extends LevelObject {
             }
         } else {
             explodeRadius = explodeRadius < 64 ? explodeRadius + 2 : 64;
-            if (explodeRadius == 64) {
-                getLevel().removeObject(this);
-            }
+            if (explodeRadius == 64) getLevel().removeObject(this);
         }
     }
 

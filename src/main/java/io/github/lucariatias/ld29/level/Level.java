@@ -3,6 +3,7 @@ package io.github.lucariatias.ld29.level;
 import io.github.lucariatias.ld29.Descent;
 import io.github.lucariatias.ld29.block.Block;
 import io.github.lucariatias.ld29.block.BreakableBlock;
+import io.github.lucariatias.ld29.pickup.LaserPickup;
 import io.github.lucariatias.ld29.player.Player;
 import io.github.lucariatias.ld29.tile.TileSheet;
 
@@ -21,6 +22,8 @@ public class Level {
     private TileSheet blockTileSheet;
     private TileSheet breakableBlockTileSheet;
 
+    private BufferedImage pickupImage;
+
     private BufferedImage map;
 
     private final Set<LevelObject> objects = Collections.synchronizedSet(new HashSet<LevelObject>());
@@ -31,6 +34,7 @@ public class Level {
         try {
             blockTileSheet = new TileSheet(ImageIO.read(getClass().getResourceAsStream("/tiles.png")), 32, 32);
             breakableBlockTileSheet = new TileSheet(ImageIO.read(getClass().getResourceAsStream("/tiles_breakable.png")), 32, 32);
+            pickupImage = ImageIO.read(getClass().getResourceAsStream("/pickup.png"));
         } catch (IOException exception) {
             exception.printStackTrace();
         }
@@ -106,6 +110,7 @@ public class Level {
             case 1: return new Block(this, blockTileSheet.getImage(colour.getRed(), colour.getGreen()), getBlockBounds(colour));
             case 2: return descent.getPlayer();
             case 3: return new BreakableBlock(this, breakableBlockTileSheet.getImage(colour.getRed(), colour.getGreen()), getBlockBounds(colour));
+            case 4: return new LaserPickup(descent, this, pickupImage);
             default: return null;
         }
     }

@@ -6,6 +6,7 @@ import io.github.lucariatias.ld29.level.Level;
 import io.github.lucariatias.ld29.level.LevelObject;
 import io.github.lucariatias.ld29.level.Location;
 import io.github.lucariatias.ld29.level.Vector;
+import io.github.lucariatias.ld29.pickup.Pickup;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -23,6 +24,8 @@ public class Player extends LevelObject {
 
     private boolean dead;
     private int explodeRadius = 1;
+
+    private boolean laserEnabled;
 
     public Player(Descent descent, Level level, BufferedImage image) {
         super(level);
@@ -82,10 +85,16 @@ public class Player extends LevelObject {
     public void onTick() {
         if (!dead) {
             setDirection(new Vector((int) Math.round(speed * Math.sin(Math.toRadians(90 - angle))), (int) Math.round(speed * Math.cos(Math.toRadians(90 - angle)))));
-            if (!isCollision(getLocation().getRelative(getDirection()))) {
-                setLocation(getLocation().getRelative(getDirection()));
+            Location newLocation = getLocation().getRelative(getDirection());
+            if (!isCollision(newLocation)) {
+                setLocation(newLocation);
             } else {
-                die();
+                LevelObject collidingObject = getCollision(newLocation);
+                if (collidingObject instanceof Pickup) {
+                    ((Pickup) collidingObject).onPickup();
+                } else {
+                    die();
+                }
             }
             laserCooldown = laserCooldown > 0 ? laserCooldown - 1 : 0;
         } else {
@@ -94,11 +103,27 @@ public class Player extends LevelObject {
     }
 
     public void shoot() {
-        if (descent.getLevelPanel().getCountDown() == 0 && laserCooldown == 0) {
+        if (descent.getLevelPanel().getCountDown() == 0 && laserEnabled && laserCooldown == 0) {
             Laser laser = new Laser(getLevel(), descent.getLevelPanel().getCamera(), getLocation(), getAngle());
             getLevel().addObject(laser);
             laserCooldown = 20;
         }
+    }
+
+    public boolean isLaserEnabled() {
+        return laserEnabled;
+    }
+
+    public void setLaserEnabled(boolean laserEnabled) {
+        this.laserEnabled = laserEnabled;
+    }
+
+    public int getLaserCooldown() {
+        return laserCooldown;
+    }
+
+    public void setLaserCooldown(int laserCooldown) {
+        this.laserCooldown = laserCooldown;
     }
 
     @Override
@@ -119,6 +144,7 @@ public class Player extends LevelObject {
         dead = false;
         explodeRadius = 1;
         angle = 0;
+        laserEnabled = false;
     }
 
 }
