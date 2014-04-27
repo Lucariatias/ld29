@@ -70,6 +70,8 @@ public class LevelPanel extends JPanel {
         graphics2D.translate(camera.getLocation().getX(), camera.getLocation().getY());
         if (descent.getOptions().isLightingEnabled()) graphics.drawImage(lighting, 0, 0, null);
         descent.getNotificationManager().render(graphics);
+        graphics.setColor(Color.RED);
+        graphics.drawString("SCORE: " + descent.getPlayer().getScore(), 416, 16);
         if (countDown > 0) {
             graphics.setColor(Color.BLACK);
             graphics.fillOval(288, 208, 64, 64);
