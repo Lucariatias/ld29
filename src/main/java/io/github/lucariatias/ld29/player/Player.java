@@ -112,6 +112,12 @@ public class Player extends LevelObject {
             PlayerShootEvent playerShootEvent = new PlayerShootEvent(this, laser);
             descent.getEventManager().dispatchEvent(playerShootEvent);
             if (!playerShootEvent.isCancelled()) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        descent.getSoundPlayer().play(getClass().getResourceAsStream("/shoot.ogg"));
+                    }
+                }).start();
                 getLevel().addObject(laser);
                 laserCooldown = 20;
             }
