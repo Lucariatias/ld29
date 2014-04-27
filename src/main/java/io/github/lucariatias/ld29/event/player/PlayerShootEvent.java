@@ -1,23 +1,17 @@
 package io.github.lucariatias.ld29.event.player;
 
 import io.github.lucariatias.ld29.event.Cancellable;
-import io.github.lucariatias.ld29.event.Event;
 import io.github.lucariatias.ld29.player.Laser;
 import io.github.lucariatias.ld29.player.Player;
 
-public class PlayerShootEvent extends Event implements Cancellable {
+public class PlayerShootEvent extends PlayerEvent implements Cancellable {
 
-    private Player player;
     private Laser laser;
     private boolean cancelled;
 
     public PlayerShootEvent(Player player, Laser laser) {
-        this.player = player;
+        super(player);
         this.laser = laser;
-    }
-
-    public Player getPlayer() {
-        return player;
     }
 
     public Laser getLaser() {

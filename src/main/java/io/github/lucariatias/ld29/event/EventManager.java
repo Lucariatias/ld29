@@ -44,8 +44,12 @@ public class EventManager {
 
     public void dispatchEvent(Event event) {
         if (!listeners.containsKey(event.getClass())) return;
-        for (Listener listener : listeners.get(event.getClass())) {
-            listener.onEvent(event);
+        Class<? extends Event> clazz = event.getClass();
+        while (clazz != null) {
+            for (Listener listener : listeners.get(event.getClass())) {
+                listener.onEvent(event);
+            }
+            clazz = (Class<? extends Event>) clazz.getSuperclass();
         }
     }
 
