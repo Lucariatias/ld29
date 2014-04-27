@@ -70,7 +70,7 @@ public class NotificationManager {
     }
 
     public void queueMessage(String message) {
-        if (queue.isEmpty()) showMessage(message); else queue.add(message);
+        if (queue.isEmpty() && !active) showMessage(message); else queue.add(message);
     }
 
 }
