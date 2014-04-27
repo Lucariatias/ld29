@@ -1,5 +1,7 @@
 package io.github.lucariatias.ld29;
 
+import io.github.lucariatias.ld29.event.EventManager;
+import io.github.lucariatias.ld29.event.tick.TickEvent;
 import io.github.lucariatias.ld29.level.Level;
 import io.github.lucariatias.ld29.level.LevelPanel;
 import io.github.lucariatias.ld29.notification.NotificationManager;
@@ -23,6 +25,7 @@ public class Descent extends JPanel implements Runnable {
 
     private LevelPanel levelPanel;
 
+    private EventManager eventManager;
     private NotificationManager notificationManager;
 
     private KeyboardPlayerController playerController;
@@ -35,6 +38,7 @@ public class Descent extends JPanel implements Runnable {
         setBackground(new Color(48, 0, 48));
         setPreferredSize(new Dimension(640, 480));
         setDoubleBuffered(true);
+        this.eventManager = new EventManager(this);
         this.notificationManager = new NotificationManager();
         BufferedImage map = null;
         try {
@@ -57,6 +61,10 @@ public class Descent extends JPanel implements Runnable {
         }
     }
 
+    public EventManager getEventManager() {
+        return eventManager;
+    }
+
     public NotificationManager getNotificationManager() {
         return notificationManager;
     }
@@ -70,6 +78,7 @@ public class Descent extends JPanel implements Runnable {
     }
 
     private void doTick() {
+        eventManager.dispatchEvent(new TickEvent());
         playerController.onTick();
         levelPanel.onTick();
         notificationManager.onTick();
