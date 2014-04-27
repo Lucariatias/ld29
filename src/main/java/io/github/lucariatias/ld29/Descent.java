@@ -60,6 +60,7 @@ public class Descent extends JPanel implements Runnable {
         this.eventManager = new EventManager(this);
         this.notificationManager = new NotificationManager(this);
         this.pluginManager = new PluginManager(this);
+        this.soundPlayer = new SoundPlayer();
         BufferedImage map = null;
         try {
             map = ImageIO.read(getClass().getResourceAsStream("/map.png"));

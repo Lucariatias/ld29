@@ -94,6 +94,13 @@ public class Player extends LevelObject {
         descent.getEventManager().dispatchEvent(new PlayerDeathEvent(this));
         dead = true;
         descent.getNotificationManager().showMessage("You died.");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                descent.getSoundPlayer().play(getClass().getResourceAsStream("/explode.ogg"));
+            }
+        }).start();
+
     }
 
     public void reset() {
