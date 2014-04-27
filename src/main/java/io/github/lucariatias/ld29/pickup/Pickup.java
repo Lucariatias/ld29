@@ -36,7 +36,7 @@ public abstract class Pickup extends LevelObject {
 
     @Override
     public Rectangle getBoundsAt(Location location) {
-        return new Rectangle(location.getX(), location.getY(), image.getWidth(), image.getHeight());
+        return dead ? new Rectangle(location.getX(), location.getY(), 0, 0) : new Rectangle(location.getX(), location.getY(), image.getWidth(), image.getHeight());
     }
 
     public String getName() {
@@ -49,7 +49,7 @@ public abstract class Pickup extends LevelObject {
 
     @Override
     public void onTick() {
-        if (dead) effectRadius = effectRadius < 64 ? effectRadius + 1 : 64;
+        if (dead) effectRadius = effectRadius < 64 ? effectRadius + 4 : 64;
         if (effectRadius == 64) getLevel().removeObject(this);
     }
 
