@@ -4,10 +4,7 @@ import io.github.lucariatias.ld29.event.EventManager;
 import io.github.lucariatias.ld29.event.tick.TickEvent;
 import io.github.lucariatias.ld29.level.Level;
 import io.github.lucariatias.ld29.level.LevelPanel;
-import io.github.lucariatias.ld29.menu.SettingsDifficultyMenu;
-import io.github.lucariatias.ld29.menu.MainMenu;
-import io.github.lucariatias.ld29.menu.SettingsLightingMenu;
-import io.github.lucariatias.ld29.menu.SettingsMenu;
+import io.github.lucariatias.ld29.menu.*;
 import io.github.lucariatias.ld29.notification.NotificationManager;
 import io.github.lucariatias.ld29.options.Options;
 import io.github.lucariatias.ld29.player.KeyboardPlayerController;
@@ -96,6 +93,8 @@ public class Descent extends JPanel implements Runnable {
         add(settingsDifficultyMenu, "settings.difficulty");
         SettingsLightingMenu settingsLightingMenu = new SettingsLightingMenu(this);
         add(settingsLightingMenu, "settings.lighting");
+        SettingsSoundMenu settingsSoundMenu = new SettingsSoundMenu(this);
+        add(settingsSoundMenu, "settings.sound");
         pluginManager.loadPlugins();
     }
 

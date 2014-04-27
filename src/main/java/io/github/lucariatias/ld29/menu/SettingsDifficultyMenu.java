@@ -8,34 +8,34 @@ public class SettingsDifficultyMenu extends Menu {
     public SettingsDifficultyMenu(Descent descent) {
         super(descent);
         setTitle("Difficulty settings");
-        addMenuItem(new MenuItem("Easy", new Runnable() {
+        addMenuItem("Easy", new Runnable() {
             @Override
             public void run() {
                 getDescent().getOptions().setDifficulty(Difficulty.EASY);
                 getDescent().setPanel("settings");
             }
-        }));
-        addMenuItem(new MenuItem("Normal", new Runnable() {
+        });
+        addMenuItem("Normal", new Runnable() {
             @Override
             public void run() {
                 getDescent().getOptions().setDifficulty(Difficulty.NORMAL);
                 getDescent().setPanel("settings");
             }
-        }));
-        addMenuItem(new MenuItem("Hard", new Runnable() {
+        });
+        addMenuItem("Hard", new Runnable() {
             @Override
             public void run() {
                 getDescent().getOptions().setDifficulty(Difficulty.HARD);
                 getDescent().setPanel("settings");
             }
-        }));
-        addMenuItem(new MenuItem("Insane", new Runnable() {
+        });
+        addMenuItem("Insane", new Runnable() {
             @Override
             public void run() {
                 getDescent().getOptions().setDifficulty(Difficulty.INSANE);
                 getDescent().setPanel("settings");
             }
-        }));
+        });
     }
 
 }

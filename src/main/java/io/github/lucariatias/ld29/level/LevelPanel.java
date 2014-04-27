@@ -43,14 +43,16 @@ public class LevelPanel extends JPanel {
     public void setActive(boolean active) {
         this.active = active;
         if (active) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    SoundPlayer soundPlayer = LevelPanel.this.descent.getSoundPlayer();
-                    soundPlayer.stopAll();
-                    soundPlayer.play(getClass().getResourceAsStream("/descent.ogg"));
-                }
-            }).start();
+            if (descent.getOptions().isMusicEnabled()) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        SoundPlayer soundPlayer = LevelPanel.this.descent.getSoundPlayer();
+                        soundPlayer.stopAll();
+                        soundPlayer.play(getClass().getResourceAsStream("/descent.ogg"));
+                    }
+                }).start();
+            }
         } else {
             descent.getSoundPlayer().stopAll();
         }
@@ -106,14 +108,16 @@ public class LevelPanel extends JPanel {
     public void reset() {
         countDown = 160;
         level.reset();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                SoundPlayer soundPlayer = LevelPanel.this.descent.getSoundPlayer();
-                soundPlayer.stopAll();
-                soundPlayer.play(getClass().getResourceAsStream("/descent.ogg"));
-            }
-        }).start();
+        if (descent.getOptions().isMusicEnabled()) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    SoundPlayer soundPlayer = LevelPanel.this.descent.getSoundPlayer();
+                    soundPlayer.stopAll();
+                    soundPlayer.play(getClass().getResourceAsStream("/descent.ogg"));
+                }
+            }).start();
+        }
     }
 
 }

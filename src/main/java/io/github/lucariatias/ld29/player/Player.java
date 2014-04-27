@@ -133,12 +133,14 @@ public class Player extends LevelObject {
             PlayerShootEvent playerShootEvent = new PlayerShootEvent(this, laser);
             descent.getEventManager().dispatchEvent(playerShootEvent);
             if (!playerShootEvent.isCancelled()) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        descent.getSoundPlayer().play(getClass().getResourceAsStream("/shoot.ogg"));
-                    }
-                }).start();
+                if (descent.getOptions().isSoundEffectsEnabled()) {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            descent.getSoundPlayer().play(getClass().getResourceAsStream("/shoot.ogg"));
+                        }
+                    }).start();
+                }
                 getLevel().addObject(laser);
                 laserCooldown = 20;
             }
@@ -196,12 +198,14 @@ public class Player extends LevelObject {
             descent.getEventManager().dispatchEvent(new PlayerDeathEvent(this));
             dead = true;
             descent.getNotificationManager().showMessage("You died.");
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    descent.getSoundPlayer().play(getClass().getResourceAsStream("/explode.ogg"));
-                }
-            }).start();
+            if (descent.getOptions().isSoundEffectsEnabled()) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        descent.getSoundPlayer().play(getClass().getResourceAsStream("/explode.ogg"));
+                    }
+                }).start();
+            }
         } else {
             setLives(getLives() - 1);
             angle = angle - 180;

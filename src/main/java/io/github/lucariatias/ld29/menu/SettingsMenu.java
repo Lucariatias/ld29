@@ -19,6 +19,12 @@ public class SettingsMenu extends Menu {
                 getDescent().setPanel("settings.lighting");
             }
         });
+        addMenuItem("Sound settings", new Runnable() {
+            @Override
+            public void run() {
+                getDescent().setPanel("settings.sound");
+            }
+        });
         addMenuItem("Main menu", new Runnable() {
             @Override
             public void run() {
