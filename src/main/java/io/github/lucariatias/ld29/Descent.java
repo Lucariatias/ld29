@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 
 public class Descent extends JPanel implements Runnable {
 
-    private DescentFrame frame;
+    private DescentApplet frame;
 
     public static final long DELAY = 25L;
 
@@ -46,7 +46,7 @@ public class Descent extends JPanel implements Runnable {
     private Font titleFont;
     private Font font;
 
-    public Descent(DescentFrame frame) {
+    public Descent(DescentApplet frame) {
         this.frame = frame;
         CardLayout layout = new CardLayout();
         setLayout(layout);
@@ -98,7 +98,7 @@ public class Descent extends JPanel implements Runnable {
         pluginManager.loadPlugins();
     }
 
-    public DescentFrame getFrame() {
+    public DescentApplet getFrame() {
         return frame;
     }
 

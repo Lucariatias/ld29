@@ -48,7 +48,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>io.github.lucariatias.ld29.DescentFrame</mainClass>
+                            <mainClass>io.github.lucariatias.ld29.DescentApplet</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

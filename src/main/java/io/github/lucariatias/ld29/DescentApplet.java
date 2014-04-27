@@ -3,7 +3,7 @@ package io.github.lucariatias.ld29;
 import javax.swing.*;
 import java.awt.*;
 
-public class DescentFrame extends JFrame {
+public class DescentApplet extends JApplet {
 
     public static void main(String[] args) {
         try {
@@ -14,20 +14,15 @@ public class DescentFrame extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                JFrame frame = new DescentFrame();
-                frame.setVisible(true);
+                JApplet applet = new DescentApplet();
+                applet.setVisible(true);
             }
         });
     }
 
-    public DescentFrame() {
+    public DescentApplet() {
         add(new Descent(this));
-        setTitle("Descent");
-        setResizable(false);
         setFocusable(true);
-        pack();
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
 }
