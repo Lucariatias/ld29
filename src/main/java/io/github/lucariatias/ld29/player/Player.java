@@ -1,6 +1,7 @@
 package io.github.lucariatias.ld29.player;
 
 import io.github.lucariatias.ld29.Descent;
+import io.github.lucariatias.ld29.event.player.PlayerDeathEvent;
 import io.github.lucariatias.ld29.level.Level;
 import io.github.lucariatias.ld29.level.LevelObject;
 import io.github.lucariatias.ld29.level.Location;
@@ -90,6 +91,7 @@ public class Player extends LevelObject {
     }
 
     public void die() {
+        descent.getEventManager().dispatchEvent(new PlayerDeathEvent(this));
         dead = true;
         descent.getNotificationManager().showMessage("You died.");
     }
