@@ -2,6 +2,7 @@ package io.github.lucariatias.ld29.player;
 
 import io.github.lucariatias.ld29.Descent;
 import io.github.lucariatias.ld29.event.player.PlayerDeathEvent;
+import io.github.lucariatias.ld29.event.player.PlayerShootEvent;
 import io.github.lucariatias.ld29.level.Level;
 import io.github.lucariatias.ld29.level.LevelObject;
 import io.github.lucariatias.ld29.level.Location;
@@ -105,8 +106,12 @@ public class Player extends LevelObject {
     public void shoot() {
         if (descent.getLevelPanel().getCountDown() == 0 && laserEnabled && laserCooldown == 0) {
             Laser laser = new Laser(getLevel(), descent.getLevelPanel().getCamera(), getLocation(), getAngle());
-            getLevel().addObject(laser);
-            laserCooldown = 20;
+            PlayerShootEvent playerShootEvent = new PlayerShootEvent(this, laser);
+            descent.getEventManager().dispatchEvent(playerShootEvent);
+            if (!playerShootEvent.isCancelled()) {
+                getLevel().addObject(laser);
+                laserCooldown = 20;
+            }
         }
     }
 
