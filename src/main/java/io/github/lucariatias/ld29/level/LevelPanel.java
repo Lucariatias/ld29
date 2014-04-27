@@ -4,14 +4,18 @@ import io.github.lucariatias.ld29.Descent;
 import io.github.lucariatias.ld29.player.Camera;
 import io.github.lucariatias.ld29.player.Player;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class LevelPanel extends JPanel {
 
     private Descent descent;
     private Level level;
     private Camera camera;
+    private BufferedImage lighting;
     private boolean active;
     private int countDown;
 
@@ -19,6 +23,11 @@ public class LevelPanel extends JPanel {
         this.descent = descent;
         this.level = level;
         this.camera = new Camera(player);
+        try {
+            this.lighting = ImageIO.read(getClass().getResourceAsStream("/light.png"));
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
         this.countDown = 160;
     }
 
@@ -51,6 +60,7 @@ public class LevelPanel extends JPanel {
         graphics2D.translate(-camera.getLocation().getX(), -camera.getLocation().getY());
         render(graphics);
         graphics2D.translate(camera.getLocation().getX(), camera.getLocation().getY());
+        graphics.drawImage(lighting, 0, 0, null);
         descent.getNotificationManager().render(graphics);
         if (countDown > 0) {
             graphics.setColor(Color.BLACK);
