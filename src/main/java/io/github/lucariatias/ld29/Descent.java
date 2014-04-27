@@ -76,7 +76,7 @@ public class Descent extends JPanel implements Runnable {
             } catch (IOException exception) {
                 exception.printStackTrace();
             }
-            playerController = new KeyboardPlayerController(player);
+            playerController = new KeyboardPlayerController(this, player);
             frame.addKeyListener(playerController);
             level.populate(map);
             this.levelPanel = new LevelPanel(this, level, player);

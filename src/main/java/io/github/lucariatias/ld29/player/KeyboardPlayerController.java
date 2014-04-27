@@ -1,5 +1,7 @@
 package io.github.lucariatias.ld29.player;
 
+import io.github.lucariatias.ld29.Descent;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -7,8 +9,11 @@ import static java.awt.event.KeyEvent.*;
 
 public class KeyboardPlayerController extends PlayerController implements KeyListener {
 
-    public KeyboardPlayerController(Player player) {
+    private Descent descent;
+
+    public KeyboardPlayerController(Descent descent, Player player) {
         super(player);
+        this.descent = descent;
     }
 
     @Override
@@ -27,7 +32,7 @@ public class KeyboardPlayerController extends PlayerController implements KeyLis
     @Override
     public void keyReleased(KeyEvent event) {
         switch (event.getKeyCode()) {
-            case VK_R: getPlayer().getLevel().reset(); break;
+            case VK_R: descent.getLevelPanel().reset(); break;
         }
     }
 

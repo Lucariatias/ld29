@@ -48,8 +48,8 @@ public class LevelPanel extends JPanel {
             countDown = countDown > 0 ? countDown - 1 : countDown;
             if (countDown == 0) {
                 level.onTick();
-                camera.onTick();
             }
+            camera.onTick();
         }
     }
 
@@ -78,6 +78,11 @@ public class LevelPanel extends JPanel {
 
     private void render(Graphics graphics) {
         level.render(graphics);
+    }
+
+    public void reset() {
+        countDown = 160;
+        level.reset();
     }
 
 }
