@@ -33,6 +33,7 @@ public class Descent extends JPanel implements Runnable {
     private Options options;
 
     private LevelPanel levelPanel;
+    private LevelPanel defaultLevelPanel;
 
     private EventManager eventManager;
     private NotificationManager notificationManager;
@@ -65,14 +66,14 @@ public class Descent extends JPanel implements Runnable {
         this.notificationManager = new NotificationManager(this);
         this.pluginManager = new PluginManager(this);
         this.soundPlayer = new SoundPlayer();
+        MainMenu menu = new MainMenu(this);
+        add(menu, "menu");
         BufferedImage map = null;
         try {
             map = ImageIO.read(getClass().getResourceAsStream("/map.png"));
         } catch (IOException exception) {
             exception.printStackTrace();
         }
-        MainMenu menu = new MainMenu(this);
-        add(menu, "menu");
         if (map != null) {
             Level level = new Level(this);
             try {
@@ -84,6 +85,7 @@ public class Descent extends JPanel implements Runnable {
             frame.addKeyListener(playerController);
             level.populate(map);
             this.levelPanel = new LevelPanel(this, level, player);
+            this.defaultLevelPanel = levelPanel;
             add(levelPanel, "level");
         }
         setPanel("menu");
@@ -133,6 +135,15 @@ public class Descent extends JPanel implements Runnable {
 
     public LevelPanel getLevelPanel() {
         return levelPanel;
+    }
+
+    public void setLevelPanel(LevelPanel levelPanel) {
+        this.levelPanel = levelPanel;
+    }
+
+    public void restoreDefaultLevelPanel() {
+        this.levelPanel = defaultLevelPanel;
+        levelPanel.reset();
     }
 
     public Player getPlayer() {

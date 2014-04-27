@@ -63,7 +63,6 @@ public class Level {
     }
 
     public void reset() {
-        objects.clear();
         populate(map);
         descent.getPlayer().reset();
         descent.getPlayerController().reset();
@@ -94,6 +93,8 @@ public class Level {
     }
 
     public void populate(BufferedImage map) {
+        objects.clear();
+        deadObjects.clear();
         for (int x = 0; x < map.getWidth(); x++) {
             for (int y = 0; y < map.getHeight(); y++) {
                 int pixel = map.getRGB(x, y);

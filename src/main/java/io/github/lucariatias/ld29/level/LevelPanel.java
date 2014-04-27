@@ -32,6 +32,14 @@ public class LevelPanel extends JPanel {
         this.countDown = 160;
     }
 
+    public void setLevel(Level level) {
+        this.level = level;
+    }
+
+    public Level getLevel() {
+        return level;
+    }
+
     public Camera getCamera() {
         return camera;
     }

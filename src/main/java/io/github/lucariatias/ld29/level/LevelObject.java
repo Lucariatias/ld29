@@ -26,6 +26,10 @@ public abstract class LevelObject {
         return level;
     }
 
+    public void setLevel(Level level) {
+        this.level = level;
+    }
+
     public Location getLocation() {
         return location;
     }
