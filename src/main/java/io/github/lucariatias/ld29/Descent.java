@@ -9,12 +9,14 @@ import io.github.lucariatias.ld29.notification.NotificationManager;
 import io.github.lucariatias.ld29.player.KeyboardPlayerController;
 import io.github.lucariatias.ld29.player.Player;
 import io.github.lucariatias.ld29.player.PlayerController;
+import io.github.lucariatias.ld29.plugin.PluginManager;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public class Descent extends JPanel implements Runnable {
 
@@ -24,10 +26,13 @@ public class Descent extends JPanel implements Runnable {
 
     private Thread thread;
 
+    private Logger logger;
+
     private LevelPanel levelPanel;
 
     private EventManager eventManager;
     private NotificationManager notificationManager;
+    private PluginManager pluginManager;
 
     private KeyboardPlayerController playerController;
     private Player player;
@@ -42,6 +47,7 @@ public class Descent extends JPanel implements Runnable {
         setBackground(new Color(48, 0, 48));
         setPreferredSize(new Dimension(640, 480));
         setDoubleBuffered(true);
+        this.logger = Logger.getLogger("Descent");
         try {
             this.titleFont = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/slkscr.ttf")).deriveFont(48F);
             this.font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/slkscr.ttf")).deriveFont(16F);
@@ -50,6 +56,7 @@ public class Descent extends JPanel implements Runnable {
         }
         this.eventManager = new EventManager(this);
         this.notificationManager = new NotificationManager();
+        this.pluginManager = new PluginManager(this);
         BufferedImage map = null;
         try {
             map = ImageIO.read(getClass().getResourceAsStream("/map.png"));
@@ -72,11 +79,16 @@ public class Descent extends JPanel implements Runnable {
             add(levelPanel, "level");
         }
         setPanel("menu");
+        pluginManager.loadPlugins();
     }
 
     public void setPanel(String panel) {
         CardLayout layout = (CardLayout) getLayout();
         layout.show(this, panel);
+    }
+
+    public Logger getLogger() {
+        return logger;
     }
 
     public EventManager getEventManager() {

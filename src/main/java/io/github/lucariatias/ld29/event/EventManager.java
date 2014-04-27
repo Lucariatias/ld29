@@ -1,11 +1,9 @@
 package io.github.lucariatias.ld29.event;
 
 import io.github.lucariatias.ld29.Descent;
+import io.github.lucariatias.ld29.plugin.Plugin;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class EventManager {
 
@@ -22,6 +20,26 @@ public class EventManager {
             listeners.put(listener.getEvent(), new HashSet<Listener>());
         }
         return listeners.get(listener.getEvent()).add(listener);
+    }
+
+    public void unregisterListener(Listener listener) {
+        for (Set<Listener> eventListeners : listeners.values()) {
+            if (eventListeners.contains(listener)) {
+                eventListeners.remove(listener);
+            }
+        }
+    }
+
+    public void unregisterListeners(Plugin plugin) {
+        for (Set<Listener> eventListeners : listeners.values()) {
+            Iterator<Listener> iterator = eventListeners.iterator();
+            while (iterator.hasNext()) {
+                Listener listener = iterator.next();
+                if (listener.getPlugin() == plugin) {
+                    iterator.remove();
+                }
+            }
+        }
     }
 
     public void dispatchEvent(Event event) {
