@@ -26,6 +26,7 @@ public class KeyboardPlayerController extends PlayerController implements KeyLis
             case VK_DOWN:case VK_S: setApproachingAngle(90); break;
             case VK_LEFT:case VK_A: setApproachingAngle(180); break;
             case VK_UP:case VK_W: setApproachingAngle(270); break;
+            case VK_SPACE: getPlayer().shoot(); break;
         }
     }
 

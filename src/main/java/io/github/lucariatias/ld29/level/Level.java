@@ -2,6 +2,7 @@ package io.github.lucariatias.ld29.level;
 
 import io.github.lucariatias.ld29.Descent;
 import io.github.lucariatias.ld29.block.Block;
+import io.github.lucariatias.ld29.block.BreakableBlock;
 import io.github.lucariatias.ld29.player.Player;
 import io.github.lucariatias.ld29.tile.TileSheet;
 
@@ -17,23 +18,26 @@ public class Level {
 
     private Descent descent;
 
-    private TileSheet tileSheet;
+    private TileSheet blockTileSheet;
+    private TileSheet breakableBlockTileSheet;
 
     private BufferedImage map;
 
     private final Set<LevelObject> objects = Collections.synchronizedSet(new HashSet<LevelObject>());
+    private Set<LevelObject> deadObjects = new HashSet<>();
 
     public Level(Descent descent) {
         this.descent = descent;
         try {
-            tileSheet = new TileSheet(ImageIO.read(getClass().getResourceAsStream("/tiles.png")), 32, 32);
+            blockTileSheet = new TileSheet(ImageIO.read(getClass().getResourceAsStream("/tiles.png")), 32, 32);
+            breakableBlockTileSheet = new TileSheet(ImageIO.read(getClass().getResourceAsStream("/tiles_breakable.png")), 32, 32);
         } catch (IOException exception) {
             exception.printStackTrace();
         }
     }
 
-    public TileSheet getTileSheet() {
-        return tileSheet;
+    public TileSheet getBlockTileSheet() {
+        return blockTileSheet;
     }
 
     public Set<LevelObject> getObjects() {
@@ -42,6 +46,10 @@ public class Level {
 
     public void addObject(LevelObject object) {
         objects.add(object);
+    }
+
+    public void removeObject(LevelObject object) {
+        deadObjects.add(object);
     }
 
     public void reset() {
@@ -53,6 +61,7 @@ public class Level {
 
     public void onTick() {
         synchronized (objects) {
+            objects.removeAll(deadObjects);
             for (LevelObject object : objects) {
                 object.onTick();
             }
@@ -60,15 +69,18 @@ public class Level {
     }
 
     public void render(Graphics graphics) {
-        Location cameraLocation = descent.getLevelPanel().getCamera().getLocation();
-        for (LevelObject object : objects) {
-            if (!(object instanceof Player)) {
-                Location objectLocation = object.getLocation();
-                if (objectLocation.getX() >= cameraLocation.getX() - 32 && objectLocation.getY() >= cameraLocation.getY() - 32 && objectLocation.distanceSquared(cameraLocation) <= 640000)
-                    object.render(graphics);
+        synchronized (objects) {
+            objects.removeAll(deadObjects);
+            Location cameraLocation = descent.getLevelPanel().getCamera().getLocation();
+            for (LevelObject object : objects) {
+                if (!(object instanceof Player)) {
+                    Location objectLocation = object.getLocation();
+                    if (objectLocation.getX() >= cameraLocation.getX() - 32 && objectLocation.getY() >= cameraLocation.getY() - 32 && objectLocation.distanceSquared(cameraLocation) <= 640000)
+                        object.render(graphics);
+                }
             }
+            descent.getPlayer().render(graphics);
         }
-        descent.getPlayer().render(graphics);
     }
 
     public void populate(BufferedImage map) {
@@ -91,127 +103,131 @@ public class Level {
     private LevelObject getObject(Color colour) {
         switch (colour.getBlue()) {
             case 0: return null;
-            case 1:
-                Rectangle bounds;
-                if (colour.getRed() == 0) {
-                    switch (colour.getGreen()) {
-                        case 0:
-                            bounds = new Rectangle(0, 0, 0, 0);
-                            break;
-                        case 1:case 2:
-                            bounds = new Rectangle(0, 0, 32, 32);
-                            break;
-                        default:
-                            bounds = new Rectangle(0, 0, 32, 32);
-                            break;
-                    }
-                } else if (colour.getRed() == 1) {
-                    switch (colour.getGreen()) {
-                        case 0:
-                            bounds = new Rectangle(16, 16, 16, 16);
-                            break;
-                        case 1:
-                            bounds = new Rectangle(16, 0, 16, 16);
-                            break;
-                        case 2:
-                            bounds = new Rectangle(0, 16, 32, 16);
-                            break;
-                        default:
-                            bounds = new Rectangle(0, 0, 32, 32);
-                            break;
-                    }
-                } else if (colour.getRed() == 2) {
-                    switch (colour.getGreen()) {
-                        case 0:
-                            bounds = new Rectangle(0, 16, 16, 16);
-                            break;
-                        case 1:
-                            bounds = new Rectangle(0, 0, 16, 16);
-                            break;
-                        case 2:
-                            bounds = new Rectangle(0, 0, 16, 32);
-                            break;
-                        default:
-                            bounds = new Rectangle(0, 0, 32, 32);
-                            break;
-                    }
-                } else if (colour.getRed() == 3) {
-                    switch (colour.getGreen()) {
-                        case 0:
-                        case 1:
-                            bounds = new Rectangle(0, 0, 32, 32);
-                            break;
-                        case 2:
-                            bounds = new Rectangle(16, 0, 16, 32);
-                            break;
-                        default:
-                            bounds = new Rectangle(0, 0, 32, 32);
-                            break;
-                    }
-                } else if (colour.getRed() == 4) {
-                    switch (colour.getGreen()) {
-                        case 0:
-                        case 1:
-                            bounds = new Rectangle(0, 0, 32, 32);
-                            break;
-                        case 2:
-                            bounds = new Rectangle(0, 0, 32, 16);
-                            break;
-                        default:
-                            bounds = new Rectangle(0, 0, 32, 32);
-                            break;
-                    }
-                } else if (colour.getRed() == 5) {
-                    switch (colour.getGreen()) {
-                        case 0:
-                            bounds = new Rectangle(0, 0, 16, 16);
-                            break;
-                        case 1:
-                            bounds = new Rectangle(0, 16, 16, 16);
-                            break;
-                        case 2:
-                        default:
-                            bounds = new Rectangle(0, 0, 32, 32);
-                            break;
-                    }
-                } else if (colour.getRed() == 6) {
-                    switch (colour.getGreen()) {
-                        case 0:
-                            bounds = new Rectangle(16, 0, 16, 16);
-                            break;
-                        case 1:
-                        case 2:
-                            bounds = new Rectangle(16, 16, 16, 16);
-                            break;
-                        case 3:
-                            bounds = new Rectangle(16, 0, 16, 16);
-                            break;
-                        default:
-                            bounds = new Rectangle(0, 0, 32, 32);
-                            break;
-                    }
-                } else if (colour.getRed() == 7) {
-                    switch (colour.getGreen()) {
-                        case 0:case 1:
-                            bounds = new Rectangle(0, 0, 32, 32);
-                            break;
-                        case 2:
-                            bounds = new Rectangle(0, 16, 16, 16);
-                            break;
-                        case 3:
-                            bounds = new Rectangle(0, 0, 16, 16);
-                            break;
-                        default:
-                            bounds = new Rectangle(0, 0, 32, 32);
-                            break;
-                    }
-                } else {
-                    bounds = new Rectangle(0, 0, 32, 32);
-                }
-                return new Block(this, tileSheet.getImage(colour.getRed(), colour.getGreen()), bounds);
+            case 1: return new Block(this, blockTileSheet.getImage(colour.getRed(), colour.getGreen()), getBlockBounds(colour));
             case 2: return descent.getPlayer();
+            case 3: return new BreakableBlock(this, breakableBlockTileSheet.getImage(colour.getRed(), colour.getGreen()), getBlockBounds(colour));
             default: return null;
         }
+    }
+
+    private Rectangle getBlockBounds(Color colour) {
+        Rectangle bounds;
+        if (colour.getRed() == 0) {
+            switch (colour.getGreen()) {
+                case 0:
+                    bounds = new Rectangle(0, 0, 0, 0);
+                    break;
+                case 1:case 2:
+                    bounds = new Rectangle(0, 0, 32, 32);
+                    break;
+                default:
+                    bounds = new Rectangle(0, 0, 32, 32);
+                    break;
+            }
+        } else if (colour.getRed() == 1) {
+            switch (colour.getGreen()) {
+                case 0:
+                    bounds = new Rectangle(16, 16, 16, 16);
+                    break;
+                case 1:
+                    bounds = new Rectangle(16, 0, 16, 16);
+                    break;
+                case 2:
+                    bounds = new Rectangle(0, 16, 32, 16);
+                    break;
+                default:
+                    bounds = new Rectangle(0, 0, 32, 32);
+                    break;
+            }
+        } else if (colour.getRed() == 2) {
+            switch (colour.getGreen()) {
+                case 0:
+                    bounds = new Rectangle(0, 16, 16, 16);
+                    break;
+                case 1:
+                    bounds = new Rectangle(0, 0, 16, 16);
+                    break;
+                case 2:
+                    bounds = new Rectangle(0, 0, 16, 32);
+                    break;
+                default:
+                    bounds = new Rectangle(0, 0, 32, 32);
+                    break;
+            }
+        } else if (colour.getRed() == 3) {
+            switch (colour.getGreen()) {
+                case 0:
+                case 1:
+                    bounds = new Rectangle(0, 0, 32, 32);
+                    break;
+                case 2:
+                    bounds = new Rectangle(16, 0, 16, 32);
+                    break;
+                default:
+                    bounds = new Rectangle(0, 0, 32, 32);
+                    break;
+            }
+        } else if (colour.getRed() == 4) {
+            switch (colour.getGreen()) {
+                case 0:
+                case 1:
+                    bounds = new Rectangle(0, 0, 32, 32);
+                    break;
+                case 2:
+                    bounds = new Rectangle(0, 0, 32, 16);
+                    break;
+                default:
+                    bounds = new Rectangle(0, 0, 32, 32);
+                    break;
+            }
+        } else if (colour.getRed() == 5) {
+            switch (colour.getGreen()) {
+                case 0:
+                    bounds = new Rectangle(0, 0, 16, 16);
+                    break;
+                case 1:
+                    bounds = new Rectangle(0, 16, 16, 16);
+                    break;
+                case 2:
+                default:
+                    bounds = new Rectangle(0, 0, 32, 32);
+                    break;
+            }
+        } else if (colour.getRed() == 6) {
+            switch (colour.getGreen()) {
+                case 0:
+                    bounds = new Rectangle(16, 0, 16, 16);
+                    break;
+                case 1:
+                case 2:
+                    bounds = new Rectangle(16, 16, 16, 16);
+                    break;
+                case 3:
+                    bounds = new Rectangle(16, 0, 16, 16);
+                    break;
+                default:
+                    bounds = new Rectangle(0, 0, 32, 32);
+                    break;
+            }
+        } else if (colour.getRed() == 7) {
+            switch (colour.getGreen()) {
+                case 0:case 1:
+                    bounds = new Rectangle(0, 0, 32, 32);
+                    break;
+                case 2:
+                    bounds = new Rectangle(0, 16, 16, 16);
+                    break;
+                case 3:
+                    bounds = new Rectangle(0, 0, 16, 16);
+                    break;
+                default:
+                    bounds = new Rectangle(0, 0, 32, 32);
+                    break;
+            }
+        } else {
+            bounds = new Rectangle(0, 0, 32, 32);
+        }
+        return bounds;
     }
 
 }

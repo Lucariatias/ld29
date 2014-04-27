@@ -60,4 +60,16 @@ public abstract class LevelObject {
         return false;
     }
 
+    public LevelObject getCollision(Location location) {
+        for (LevelObject object : level.getObjects()) {
+            if (!object.isSolid()) continue;
+            if (object.getBounds().intersects(getBoundsAt(location))) return object;
+        }
+        return null;
+    }
+
+    public void die() {
+        getLevel().removeObject(this);
+    }
+
 }

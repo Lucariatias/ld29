@@ -19,6 +19,8 @@ public class Player extends LevelObject {
     private int speed = 4;
     private int angle;
 
+    private int laserCooldown;
+
     private boolean dead;
     private int explodeRadius = 1;
 
@@ -85,11 +87,21 @@ public class Player extends LevelObject {
             } else {
                 die();
             }
+            laserCooldown = laserCooldown > 0 ? laserCooldown - 1 : 0;
         } else {
             explodeRadius = explodeRadius < 1280 ? explodeRadius + 16 : 1280;
         }
     }
 
+    public void shoot() {
+        if (descent.getLevelPanel().getCountDown() == 0 && laserCooldown == 0) {
+            Laser laser = new Laser(getLevel(), descent.getLevelPanel().getCamera(), getLocation(), getAngle());
+            getLevel().addObject(laser);
+            laserCooldown = 20;
+        }
+    }
+
+    @Override
     public void die() {
         descent.getEventManager().dispatchEvent(new PlayerDeathEvent(this));
         dead = true;

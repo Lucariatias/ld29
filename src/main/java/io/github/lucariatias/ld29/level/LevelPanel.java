@@ -43,6 +43,14 @@ public class LevelPanel extends JPanel {
         this.active = active;
     }
 
+    public int getCountDown() {
+        return countDown;
+    }
+
+    public void setCountDown(int countDown) {
+        this.countDown = countDown;
+    }
+
     public void onTick() {
         if (active) {
             countDown = countDown > 0 ? countDown - 1 : countDown;
