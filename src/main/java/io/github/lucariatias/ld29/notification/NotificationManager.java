@@ -4,6 +4,8 @@ import io.github.lucariatias.ld29.Descent;
 import io.github.lucariatias.ld29.event.notification.NotificationEvent;
 
 import java.awt.*;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class NotificationManager {
 
@@ -16,6 +18,7 @@ public class NotificationManager {
     private String message = "";
     private int tick;
     private boolean active;
+    private Queue<String> queue = new ConcurrentLinkedQueue<>();
 
     public NotificationManager(Descent descent) {
         this.descent = descent;
@@ -39,7 +42,15 @@ public class NotificationManager {
                 y -= NOTIFICATION_SPEED;
             } else {
                 if (tick >= NOTIFICATION_TICKS) {
-                    if (y <= 480) y += NOTIFICATION_SPEED; else active = false;
+                    if (y <= 480) {
+                        y += NOTIFICATION_SPEED;
+                    } else {
+                        if (!queue.isEmpty()) {
+                            showMessage(queue.poll());
+                        } else {
+                            active = false;
+                        }
+                    }
                 } else {
                     tick++;
                 }
@@ -56,6 +67,10 @@ public class NotificationManager {
             this.y = 480;
             this.active = true;
         }
+    }
+
+    public void queueMessage(String message) {
+        if (queue.isEmpty()) showMessage(message); else queue.add(message);
     }
 
 }

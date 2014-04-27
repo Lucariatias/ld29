@@ -15,6 +15,7 @@ public class LaserPickup extends Pickup {
     @Override
     public void onPickup() {
         super.onPickup();
+        getDescent().getNotificationManager().queueMessage("Use SPACE to use the laser.");
         getDescent().getPlayer().setLaserEnabled(true);
         die();
     }

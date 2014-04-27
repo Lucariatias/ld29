@@ -197,7 +197,7 @@ public class Player extends LevelObject {
         if (lives == 1) {
             descent.getEventManager().dispatchEvent(new PlayerDeathEvent(this));
             dead = true;
-            descent.getNotificationManager().showMessage("You died.");
+            descent.getNotificationManager().queueMessage("You died.");
             if (descent.getOptions().isSoundEffectsEnabled()) {
                 new Thread(new Runnable() {
                     @Override
@@ -209,7 +209,7 @@ public class Player extends LevelObject {
         } else {
             setLives(getLives() - 1);
             angle = angle - 180;
-            descent.getNotificationManager().showMessage(lives + " lives remaining.");
+            descent.getNotificationManager().queueMessage(lives + " lives remaining.");
         }
     }
 

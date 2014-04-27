@@ -43,6 +43,7 @@ public class LevelPanel extends JPanel {
     public void setActive(boolean active) {
         this.active = active;
         if (active) {
+            descent.getNotificationManager().queueMessage("Use WASD or the arrow keys to move.");
             if (descent.getOptions().isMusicEnabled()) {
                 new Thread(new Runnable() {
                     @Override

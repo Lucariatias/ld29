@@ -55,7 +55,7 @@ public abstract class Pickup extends LevelObject {
     }
 
     public void onPickup() {
-        descent.getNotificationManager().showMessage("Picked up " + getName() + "!");
+        descent.getNotificationManager().queueMessage("Picked up " + getName() + "!");
         die();
     }
 
