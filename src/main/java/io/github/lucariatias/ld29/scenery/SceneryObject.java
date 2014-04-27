@@ -7,11 +7,11 @@ import io.github.lucariatias.ld29.sprite.Sprite;
 
 import java.awt.*;
 
-public class Waterfall extends LevelObject {
+public class SceneryObject extends LevelObject {
 
     private Sprite sprite;
 
-    public Waterfall(Level level, Sprite sprite) {
+    public SceneryObject(Level level, Sprite sprite) {
         super(level);
         this.sprite = sprite;
     }
@@ -28,6 +28,6 @@ public class Waterfall extends LevelObject {
 
     @Override
     public Rectangle getBoundsAt(Location location) {
-        return null;
+        return new Rectangle(getLocation().getX(), getLocation().getY(), sprite.getImage().getWidth(), sprite.getImage().getHeight());
     }
 }
