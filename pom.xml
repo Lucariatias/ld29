@@ -4,7 +4,7 @@
 
     <groupId>io.github.lucariatias</groupId>
     <artifactId>ld29</artifactId>
-    <version>0.1.1-SNAPSHOT</version>
+    <version>0.1.2-SNAPSHOT</version>
 
     <scm>
         <connection>scm:git:https://github.com/Lucariatias/ld29.git</connection>
