@@ -87,6 +87,8 @@ public class LevelPanel extends JPanel {
 
     @Override
     public void paintComponent(Graphics graphics) {
+        graphics.setColor(new Color(48, 0, 48));
+        graphics.fillRect(0, 0, 640, 480);
         graphics.setFont(descent.getFont());
         Graphics2D graphics2D = (Graphics2D) graphics;
         graphics2D.translate(-camera.getLocation().getX(), -camera.getLocation().getY());
